@@ -1,10 +1,16 @@
 package com.me.ahem;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.net.ConnectException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -37,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Call first time database is accessed
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createReminderTableStatement = "CREATE TABLE " + REMINDER_TABLE + " (" + REMINDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " TEXT, " + REMINDER_DESCRIPTION + " TEXT)";
+        String createReminderTableStatement = "CREATE TABLE " + REMINDER_TABLE + " (" + REMINDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + LOCATION_ID + " INTEGER, " + NAME + " TEXT, " + REMINDER_DESCRIPTION + " TEXT)";
         String createLocationTableStatement = "CREATE TABLE " + LOCATION_TABLE + "(" + LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ADDRESS_ID + " INTEGER, " + LONGITUDE + " REAL, " + LATITUDE + " REAL, " + RADIUS + " REAL, " + TIME + " INTEGER)";
         String createAddressTableStatement = "CREATE TABLE " + ADDRESS_TABLE + "(" + ADDRESS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + STREET + " TEXT, " + STREET_NUMBER + " INTEGER, " + CITY + " TEXT, " + STATE + " TEXT, " + ZIP + " TEXT, " + COUNTRY + " TEXT)";
 
@@ -49,6 +55,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Call when version number of database changes
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+    //Populate the home list with all current reminders saved
+    public List<RowItem> getAllRemindersForList(){
+
+        List<RowItem> reminderList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        RowItem rowItem;
+
+        String queryString = "Select r.name, l.longitude, l.latitude, l.radius, a.street, a.street_number, a.city, a.state, a.zip, a.country  FROM " + REMINDER_TABLE + " AS r," + ADDRESS_TABLE + " AS a," + LOCATION_TABLE + " AS l WHERE " + "r." + LOCATION_ID + "=" + "l." + LOCATION_ID + " AND " +
+                             "l." + ADDRESS_ID + "=" + "a." + ADDRESS_ID;
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+
+            do{
+
+                rowItem = new RowItem();
+
+                String name = cursor.getString(0);
+                double radius = cursor.getDouble(1);
+                double longitude = cursor.getDouble(2);
+                double latitude = cursor.getDouble(3);
+
+                String street = cursor.getString(4);
+                int street_number = cursor.getInt(5);
+                String city = cursor.getString(6);
+                String state = cursor.getString(7);
+                String zip = cursor.getString(8);
+                String country = cursor.getString(9);
+
+                String fullAddress = street_number + " " + street + " " + city + ", " + state + " " + country + " " + zip;
+
+                rowItem.setAddress(fullAddress);
+                rowItem.setDistance(radius);
+                rowItem.setLatitude(latitude);
+                rowItem.setLongitude(longitude);
+                rowItem.setName(name);
+
+                reminderList.add(rowItem);
+
+            }while(cursor.moveToNext());
+
+        }else{
+            //Result set is empty. Add nothing to the return list.
+        }
+
+        cursor.close();
+        db.close();
+
+        return reminderList;
 
     }
 }

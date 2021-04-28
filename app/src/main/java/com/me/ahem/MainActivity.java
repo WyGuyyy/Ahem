@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,10 +18,17 @@ public class MainActivity extends AppCompatActivity {
         //Initialze fragment
         Fragment fragment = new MapFragment();
 
+        Fragment reminderListFragment = new reminder_list_fragment();
+
         //Open fragment
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_layout, fragment)
+                .commit();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout_controls, reminderListFragment)
                 .commit();
 
        /* fragment = new MapFragment();
