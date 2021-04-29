@@ -18,6 +18,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment {
 
+    SupportMapFragment supportMapFragment;
+
     public MapFragment() {
         // Required empty public constructor
     }
@@ -30,7 +32,7 @@ public class MapFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
         //Initialize map fragment
-        SupportMapFragment supportMapFragment = (SupportMapFragment)
+        supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
 
         //Async map
@@ -63,5 +65,9 @@ public class MapFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    public SupportMapFragment getMap(){
+        return supportMapFragment;
     }
 }
