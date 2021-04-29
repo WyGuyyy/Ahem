@@ -61,7 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Populate the home list with all current reminders saved
     public List<RowItem> getAllRemindersForList(){
 
-        List<RowItem> reminderList = new ArrayList<>();
+        List<RowItem> reminderList = new ArrayList<>();git clone https://wymtowne@bitbucket.org/wymtowne/ahem.git
         SQLiteDatabase db = this.getReadableDatabase();
 
         RowItem rowItem;
