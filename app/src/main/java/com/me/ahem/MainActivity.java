@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     Fragment reminderDetailsFragment;
     FloatingActionButton addButton;
 
+    public static String mode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +38,36 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v("d", "made it");
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.relativeLayout, new reminder_add_fragment())
-                        .commit();
-                addButton.setImageResource(android.R.drawable.ic_menu_save);
+
+                if(mode.compareTo("list") == 0){
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.relativeLayout, new reminder_add_fragment())
+                            .addToBackStack(null)
+                            .commit();
+                    addButton.setImageResource(android.R.drawable.ic_menu_save);
+
+                }else if(mode.compareTo("add") == 0){
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.relativeLayout, new reminder_add_fragment())
+                            .addToBackStack(null)
+                            .commit();
+                    addButton.setImageResource(android.R.drawable.ic_menu_save);
+
+                }else{
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.relativeLayout, new reminder_add_fragment())
+                            .addToBackStack(null)
+                            .commit();
+                    addButton.setImageResource(android.R.drawable.ic_menu_save);
+
+                }
+
             }
         });
 

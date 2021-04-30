@@ -29,6 +29,8 @@ public class reminder_details_fragment extends Fragment {
         //Initialize view
         View view = inflater.inflate(R.layout.fragment_reminder_details_fragment, container, false);
 
+        MainActivity.mode = "detail";
+
         // Inflate the layout for this fragment
         return view;
     }

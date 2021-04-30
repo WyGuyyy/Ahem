@@ -56,6 +56,8 @@ public class reminder_list_fragment extends Fragment {
             }
         });*/
 
+        MainActivity.mode = "list";
+
         // Inflate the layout for this fragment
         return view;
     }
