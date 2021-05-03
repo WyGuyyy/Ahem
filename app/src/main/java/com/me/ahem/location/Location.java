@@ -1,20 +1,41 @@
-package com.me.ahem;
+package com.me.ahem.location;
 
-public class LocationModel {
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "LOCATION_TABLE")
+public class Location {
+
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "location_id")
     private int locationID;
+
+    @ColumnInfo(name = "reminder_id")
     private int reminderID;
+
+    @ColumnInfo(name = "address_id")
     private int addressID;
+
+    @ColumnInfo(name = "longitude")
     private float longitude;
+
+    @ColumnInfo(name = "latitude")
     private float latitude;
+
+    @ColumnInfo(name = "radius")
     private float radius;
+
+    @ColumnInfo(name = "time")
     private int time;
 
-    public LocationModel() {
+    public Location() {
 
     }
 
-    public LocationModel(int locationID, int reminderID, int addressID, float longitude, float latitude, float radius, int time) {
+    public Location(@NonNull int locationID, int reminderID, int addressID, float longitude, float latitude, float radius, int time) {
         this.locationID = locationID;
         this.reminderID = reminderID;
         this.addressID = addressID;
@@ -26,7 +47,7 @@ public class LocationModel {
 
     @Override
     public String toString() {
-        return "LocationModel{" +
+        return "Location{" +
                 "locationID=" + locationID +
                 ", reminderID=" + reminderID +
                 ", addressID=" + addressID +

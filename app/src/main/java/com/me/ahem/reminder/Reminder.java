@@ -1,15 +1,29 @@
-package com.me.ahem;
+package com.me.ahem.reminder;
 
-public class ReminderModel {
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "REMINDER_TABLE")
+public class Reminder {
+
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "word")
     private int reminderID;
+
+    @ColumnInfo(name = "name")
     private String name;
+
+    @ColumnInfo(name = "reminderDescription")
     private String reminderDescription;
 
-    public ReminderModel() {
+    public Reminder() {
+
     }
 
-    public ReminderModel(int reminderID, String name, String reminderDescription) {
+    public Reminder(@NonNull int reminderID, String name, String reminderDescription) {
         this.reminderID = reminderID;
         this.name = name;
         this.reminderDescription = reminderDescription;
@@ -17,7 +31,7 @@ public class ReminderModel {
 
     @Override
     public String toString() {
-        return "ReminderModel{" +
+        return "Reminder{" +
                 "reminderID=" + reminderID +
                 ", name='" + name + '\'' +
                 ", reminderDescription='" + reminderDescription + '\'' +
