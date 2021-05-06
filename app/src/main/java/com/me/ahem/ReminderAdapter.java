@@ -21,6 +21,10 @@ public class ReminderAdapter extends BaseAdapter {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public void setData(List<RowItem> data) {
+        this.data = data;
+    }
+
     @Override
     public int getCount() {
         return data.size();
@@ -49,7 +53,7 @@ public class ReminderAdapter extends BaseAdapter {
             TextView address = (TextView) view.findViewById(R.id.rowAddress);
 
             name.setText(data.get(position).getName());
-            distance.setText(String.valueOf(data.get(position).getDistance()));
+            distance.setText(String.valueOf(data.get(position).getRadius()));
             longitude.setText(String.valueOf(data.get(position).getLongitude()));
             latitude.setText(String.valueOf(data.get(position).getLatitude()));
             address.setText(data.get(position).getAddress());

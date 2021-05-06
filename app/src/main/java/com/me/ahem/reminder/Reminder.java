@@ -10,7 +10,7 @@ public class Reminder {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    @ColumnInfo(name = "word")
+    @ColumnInfo(name = "reminder_id")
     private int reminderID;
 
     @ColumnInfo(name = "name")

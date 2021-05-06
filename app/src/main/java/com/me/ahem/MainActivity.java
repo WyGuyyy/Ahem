@@ -2,20 +2,14 @@ package com.me.ahem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.me.ahem.address.AddressViewModel;
 import com.me.ahem.location.LocationViewModel;
-import com.me.ahem.reminder.ReminderViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String mode;
 
-    private ReminderViewModel reminderViewModel;
+    private AhemViewModel reminderViewModel;
     private LocationViewModel locationViewModel;
     private AddressViewModel addressViewModel;
 
@@ -91,11 +85,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.frame_layout_controls, reminderListFragment)
                 .commit();
 
-        reminderViewModel = new ViewModelProvider(this, ViewModelProvider.Factory()).get(ReminderViewModel.class);
-        locationViewModel = new ViewModelProvider(this).get(LocationViewModel.class);
-        addressViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
-
-        reminderViewModel.get
 
        /* fragment = new MapFragment();
 

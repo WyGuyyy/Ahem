@@ -3,21 +3,32 @@ package com.me.ahem;
 public class RowItem {
 
     String name;
-    double distance;
+    double radius;
     double latitude;
     double longitude;
-    String address;
+    String street;
+    int street_number;
+    String city;
+    String state;
+    int zip;
+    String country;
 
     public RowItem(){
 
     }
 
-    public RowItem(String name, double distance, double latitude, double longitude, String address){
+    public RowItem(String name, double radius, double latitude, double longitude, String street,
+                   int streetNumber, String city, String state, int zip, String country){
         this.name = name;
-        this.distance = distance;
+        this.radius = radius;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.address = address;
+        this.street = street;
+        this.street_number = streetNumber;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.country = country;
     }
 
     public String getName() {
@@ -28,12 +39,12 @@ public class RowItem {
         this.name = name;
     }
 
-    public double getDistance() {
-        return distance;
+    public double getRadius() {
+        return radius;
     }
 
-    public void setDistance(double distance) {
-        this.distance = distance;
+    public void setRadius(double radius) {
+        this.radius = radius;
     }
 
     public double getLatitude() {
@@ -52,12 +63,56 @@ public class RowItem {
         this.longitude = longitude;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public int getStreet_number() {
+        return street_number;
+    }
+
+    public void setStreet_number(int street_number) {
+        this.street_number = street_number;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public int getZip() {
+        return zip;
+    }
+
+    public void setZip(int zip) {
+        this.zip = zip;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getAddress(){
+        return street_number + " " + street + " " + city + " " + state + " " + country + " " + zip;
     }
 
 }
