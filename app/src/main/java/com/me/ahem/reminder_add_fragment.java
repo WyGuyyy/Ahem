@@ -107,6 +107,21 @@ public class reminder_add_fragment extends Fragment implements View.OnFocusChang
     }
 
     public void updateViewModel(View v){
-        ahemViewModel
+        String[] splitArr = v.getTag().toString().split("|");
+
+        String viewType = splitArr[0];
+        String key = splitArr[1];
+        String value = "";
+
+        if(viewType.equals("ET")){
+            value = ((EditText) v).getText().toString();
+        }else if(viewType.equals("SW")){
+            value = Boolean.toString(((Switch) v).isChecked());
+        }else{
+            value = Boolean.toString(((RadioButton) v).isChecked());
+        }
+
+        ahemViewModel.updateDataMap(key, value);
+
     }
 }

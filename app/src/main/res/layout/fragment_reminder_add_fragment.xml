@@ -49,6 +49,7 @@
 
                     <EditText
                         android:id="@+id/map_position_longitude"
+                        android:tag="@string/ETLongitudeTag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -81,6 +82,7 @@
 
                     <EditText
                         android:id="@+id/map_position_latitude"
+                        android:tag="@string/ETLatitudeTag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -113,6 +115,7 @@
 
                     <EditText
                         android:id="@+id/map_position_address"
+                        android:tag="@string/ETAddressTag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -150,6 +153,7 @@
 
                 <EditText
                     android:id="@+id/add_reminder_name"
+                    android:tag="@string/ETNameTag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -176,6 +180,7 @@
 
                 <EditText
                     android:id="@+id/add_reminder_description"
+                    android:tag="@string/ETDescriptionTag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -190,6 +195,7 @@
 
                 <Switch
                     android:id="@+id/add_reminder_distance_type"
+                    android:tag="@string/SWDistanceTypeTag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -207,6 +213,7 @@
 
                     <Switch
                         android:id="@+id/add_reminder_distance_unit"
+                        android:tag="@string/SWDistanceUnitTag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -217,6 +224,7 @@
 
                     <EditText
                         android:id="@+id/add_reminder_distance_unit_amount"
+                        android:tag="@string/ETDistanceAmountTag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -257,6 +265,7 @@
 
                         <EditText
                             android:id="@+id/add_reminder_time_hour"
+                            android:tag="@string/ETHourTag"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -289,6 +298,7 @@
 
                         <EditText
                             android:id="@+id/add_reminder_time_minute"
+                            android:tag="@string/ETMinuteTag"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -321,6 +331,7 @@
 
                         <EditText
                             android:id="@+id/add_reminder_time_second"
+                            android:tag="@string/ETSecondTag"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -336,6 +347,7 @@
 
                 <Switch
                     android:id="@+id/add_reminder_sound_type"
+                    android:tag="@string/SWSoundTypeTag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -358,6 +370,7 @@
 
                         <RadioButton
                             android:id="@+id/add_reminder_sound_custom"
+                            android:tag="@string/RBCustomTag"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Custom" />
@@ -373,12 +386,14 @@
 
                     <RadioButton
                         android:id="@+id/add_reminder_sound_default"
+                        android:tag="@string/RBDefaultTag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="AI Voice" />
 
                     <RadioButton
                         android:id="@+id/add_reminder_sound_ping"
+                        android:tag="@string/RBPingTag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Ping" />

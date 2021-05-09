@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
     public static String mode;
 
     private AhemViewModel reminderViewModel;
-    private LocationViewModel locationViewModel;
-    private AddressViewModel addressViewModel;
+    /*private LocationViewModel locationViewModel;
+    private AddressViewModel addressViewModel;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
                     addButton.setImageResource(android.R.drawable.ic_menu_save);
 
                 }else if(mode.compareTo("add") == 0){
+
+                    reminderViewModel.submitDataMap();
 
                     getSupportFragmentManager()
                             .beginTransaction()
