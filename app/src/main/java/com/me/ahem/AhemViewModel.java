@@ -71,30 +71,27 @@ public class AhemViewModel extends AndroidViewModel {
         location.setValue(newLocation);
 
         //Need to figure out how to parse address here to store
-        parseAddress(currentDataMap, newAddress);
-        address.setValue(newAddress);
+        TreeMap<String, String> addressMap = parseAddress(currentDataMap);
 
+        newAddress.setStreet(addressMap.get("street"));
+        newAddress.setStreetNumber(addressMap.get("streetNumber"));
+        newAddress.setCity(addressMap.get("city"));
+        newAddress.setState(addressMap.get("state"));
+        newAddress.setCountry(addressMap.get("country"));
+        newAddress.setZip(addressMap.get("zip"));
     }
 
     public int getTimeInSeconds(int hours, int minutes, int seconds){
         return (hours * 3600) + (minutes * 60) + seconds;
     }
 
-    private void parseAddress(TreeMap<String, String> currentDataMap, Address newAddress){
+    //start here next time, implement autocomplete for address and then parse here
+    private TreeMap<String, String> parseAddress(TreeMap<String, String> currentDataMap){
         String address = currentDataMap.get("address");
-        String street = "";
-        String streetNumber = "";
-        String city = "";
-        String state = "";
-        String country = "";
-        String zip = "";
 
-        newAddress.setStreet();
-        newAddress.setStreetNumber();
-        newAddress.setCity();
-        newAddress.setState();
-        newAddress.setCountry();
-        newAddress.setZip();
+        TreeMap<String, String> addressMap = new TreeMap<String, String>();
+
+        return addressMap;
 
     }
 
