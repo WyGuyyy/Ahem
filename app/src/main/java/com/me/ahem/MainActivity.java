@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        reminderViewModel = new AhemViewModel(getApplication());
+
         //Initialze fragment
         mapFragment = new MapFragment();
         reminderListFragment = new reminder_list_fragment();

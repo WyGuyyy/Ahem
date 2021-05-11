@@ -5,6 +5,10 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.me.ahem.AhemRoomDatabase;
+import com.me.ahem.address.Address;
+import com.me.ahem.address.AddressDAO;
+import com.me.ahem.location.Location;
+import com.me.ahem.location.LocationDAO;
 import com.me.ahem.reminder.Reminder;
 import com.me.ahem.reminder.ReminderDAO;
 
@@ -13,6 +17,9 @@ import java.util.List;
 public class AhemRepository {
 
     private ReminderDAO mReminderDAO;
+    private LocationDAO mLocationDAO;
+    private AddressDAO mAddressDAO;
+
     private LiveData<List<Reminder>> mAllReminders;
     private LiveData<List<RowItem>> mAllRowItems;
 
@@ -34,6 +41,14 @@ public class AhemRepository {
     void insert(Reminder reminder){
         AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
             mReminderDAO.insert(reminder);
+        });
+    }
+
+    void insertNewRowItem(Reminder reminder, Location location, Address address){
+        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mReminderDAO.insert(reminder);
+            mLocationDAO.insert(location);
+            mAddressDAO.insert(address);
         });
     }
 

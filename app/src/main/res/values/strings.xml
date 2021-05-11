@@ -3,19 +3,21 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="ETLongitudeTag">ET|longitude</string>
-    <string name="ETLatitudeTag">ET|latitude</string>
-    <string name="ETAddressTag">ET|address</string>
-    <string name="ETNameTag">ET|name</string>
-    <string name="ETDescriptionTag">ET|description</string>
-    <string name="SWDistanceTypeTag">SW|distance_type</string>
-    <string name="SWDistanceUnitTag">ET|distance_unit</string>
-    <string name="ETDistanceAmountTag">ET|distance_amount</string>
-    <string name="ETHourTag">ET|hour</string>
-    <string name="ETMinuteTag">ET|minute</string>
-    <string name="ETSecondTag">ET|second</string>
-    <string name="SWSoundTypeTag">SW|sound_type</string>
-    <string name="RBCustomTag">RB|custom</string>
-    <string name="RBDefaultTag">RB|default</string>
-    <string name="RBPingTag">RB|ping</string>
+    <string name="api_key">AIzaSyBwbdSs7l1KV0PHTHJJ-FO7BBb2Ox1ewD4</string>
+
+    <string name="ETLongitudeTag">longitude</string>
+    <string name="ETLatitudeTag">latitude</string>
+    <string name="ETAddressTag">address</string>
+    <string name="ETNameTag">name</string>
+    <string name="ETDescriptionTag">description</string>
+    <string name="SWDistanceTypeTag">distance_type</string>
+    <string name="SWDistanceUnitTag">distance_unit</string>
+    <string name="ETDistanceAmountTag">distance_amount</string>
+    <string name="ETHourTag">hour</string>
+    <string name="ETMinuteTag">minute</string>
+    <string name="ETSecondTag">second</string>
+    <string name="SWSoundTypeTag">sound_type</string>
+    <string name="RBCustomTag">custom</string>
+    <string name="RBDefaultTag">default</string>
+    <string name="RBPingTag">ping</string>
 </resources>

@@ -36,6 +36,12 @@ public class AhemViewModel extends AndroidViewModel {
         mRepository = new AhemRepository(application);
         mAllReminders = mRepository.getAllReminders();
         mAllRowItems = mRepository.getAllRowItems();
+
+        dataMap = new MutableLiveData<TreeMap<String, String>>();
+        reminder = new MutableLiveData<Reminder>();
+        location = new MutableLiveData<Location>();
+        address = new MutableLiveData<Address>();
+
         dataMap.setValue(new TreeMap<String, String>());
     }
 
@@ -44,6 +50,8 @@ public class AhemViewModel extends AndroidViewModel {
     LiveData<List<RowItem>> getAllRowItems() {return mAllRowItems;}
 
     public void insert(Reminder reminder) {mRepository.insert(reminder);}
+
+    public void insert(Reminder reminder, Location location, Address address){mRepository.insertNewRowItem(reminder, location, address);}
 
     public void updateDataMap(String key, String value){
         TreeMap<String, String> tempMap = dataMap.getValue();
@@ -73,12 +81,19 @@ public class AhemViewModel extends AndroidViewModel {
         //Need to figure out how to parse address here to store
         TreeMap<String, String> addressMap = parseAddress(currentDataMap);
 
-        newAddress.setStreet(addressMap.get("street"));
+        /*newAddress.setStreet(addressMap.get("street"));
         newAddress.setStreetNumber(addressMap.get("streetNumber"));
         newAddress.setCity(addressMap.get("city"));
         newAddress.setState(addressMap.get("state"));
         newAddress.setCountry(addressMap.get("country"));
-        newAddress.setZip(addressMap.get("zip"));
+        newAddress.setZip(addressMap.get("zip"));*/
+        newAddress.setStreet("Test");
+        newAddress.setStreetNumber("Test");
+        newAddress.setCity("Test");
+        newAddress.setState("Test");
+        newAddress.setCountry("Test");
+        newAddress.setZip("Test");
+        address.setValue(newAddress);
     }
 
     public int getTimeInSeconds(int hours, int minutes, int seconds){

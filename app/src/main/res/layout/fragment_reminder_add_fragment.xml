@@ -113,9 +113,8 @@
                         android:textAlignment="center"
                         android:layout_gravity="center"/>
 
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/map_position_address"
-                        android:tag="@string/ETAddressTag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -123,7 +122,9 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="20dp"
                         android:ems="10"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:tag="@string/ETAddressTag"
+                        android:completionThreshold="1"/>
 
                 </LinearLayout>
             </LinearLayout>
