@@ -2,6 +2,7 @@ package com.me.ahem;
 
 import android.app.Application;
 import android.provider.Telephony;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -53,19 +54,31 @@ public class AhemViewModel extends AndroidViewModel {
 
     public void insert(Reminder reminder, Location location, Address address){mRepository.insertNewRowItem(reminder, location, address);}
 
-    public void updateDataMap(String key, String value){
-        TreeMap<String, String> tempMap = dataMap.getValue();
-        tempMap.put(key, value);
-        dataMap.setValue(tempMap);
+    public void setDataMap(TreeMap<String, String> newDataMap){
+
+        int time = getTimeInSeconds(Integer.parseInt(newDataMap.get("hour")), Integer.parseInt(newDataMap.get("minute")), Integer.parseInt(newDataMap.get("second")));
+        parseAddress(newDataMap);
+
+        dataMap.setValue(newDataMap);
     }
 
-    public void submitDataMap(){
+    /*public void updateDataMap(String key, String value){
+        TreeMap<String, String> tempMap = dataMap.getValue();
+        tempMap.put(key, value);
+        Log.d("before", key);
+        dataMap.setValue(tempMap);
+        Log.d("after", dataMap.getValue().keySet().toString());
+    }*/
+
+    /*public void submitDataMap(){
         Reminder newReminder = reminder.getValue();
         Location newLocation = location.getValue();
         Address newAddress = address.getValue();
-        TreeMap<String, String> currentDataMap = dataMap.getValue();
+        //TreeMap<String, String> currentDataMap = dataMap.getValue();
+        TreeMap<String, String> currentDataMap = getDataMap().getValue();
+        Log.d("test", currentDataMap.keySet().toString());
 
-        int time = getTimeInSeconds(Integer.parseInt(currentDataMap.get("hours")), Integer.parseInt(currentDataMap.get("minutes")), Integer.parseInt(currentDataMap.get("seconds")));
+        int time = getTimeInSeconds(Integer.parseInt(currentDataMap.get("hour")), Integer.parseInt(currentDataMap.get("minute")), Integer.parseInt(currentDataMap.get("second")));
         parseAddress(currentDataMap);
 
         newReminder.setName(currentDataMap.get("name"));
@@ -81,12 +94,6 @@ public class AhemViewModel extends AndroidViewModel {
         //Need to figure out how to parse address here to store
         TreeMap<String, String> addressMap = parseAddress(currentDataMap);
 
-        /*newAddress.setStreet(addressMap.get("street"));
-        newAddress.setStreetNumber(addressMap.get("streetNumber"));
-        newAddress.setCity(addressMap.get("city"));
-        newAddress.setState(addressMap.get("state"));
-        newAddress.setCountry(addressMap.get("country"));
-        newAddress.setZip(addressMap.get("zip"));*/
         newAddress.setStreet("Test");
         newAddress.setStreetNumber("Test");
         newAddress.setCity("Test");
@@ -94,7 +101,7 @@ public class AhemViewModel extends AndroidViewModel {
         newAddress.setCountry("Test");
         newAddress.setZip("Test");
         address.setValue(newAddress);
-    }
+    }*/
 
     public int getTimeInSeconds(int hours, int minutes, int seconds){
         return (hours * 3600) + (minutes * 60) + seconds;
@@ -108,6 +115,10 @@ public class AhemViewModel extends AndroidViewModel {
 
         return addressMap;
 
+    }
+
+    public MutableLiveData<TreeMap<String, String>> getDataMap(){
+        return dataMap;
     }
 
 }

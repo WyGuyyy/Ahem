@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        reminderViewModel = new AhemViewModel(getApplication());
+        //reminderViewModel = new AhemViewModel(getApplication());
+        reminderViewModel =  new ViewModelProvider(this, new AhemViewModelFactory(getApplication())).get(AhemViewModel.class);
 
         //Initialze fragment
         mapFragment = new MapFragment();
@@ -55,14 +56,16 @@ public class MainActivity extends AppCompatActivity {
 
                 }else if(mode.compareTo("add") == 0){
 
-                    reminderViewModel.submitDataMap();
+                    if(((reminder_add_fragment)addReminderFragment).persistFields()) {
+                        reminderViewModel.submitDataMap(); //Start her next time, need to submit data map now
 
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.relativeLayout, new reminder_add_fragment())
-                            .addToBackStack(null)
-                            .commit();
-                    addButton.setImageResource(android.R.drawable.ic_menu_save);
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.relativeLayout, new reminder_add_fragment())
+                                .addToBackStack(null)
+                                .commit();
+                        addButton.setImageResource(android.R.drawable.ic_menu_save);
+                    }
 
                 }else{
 

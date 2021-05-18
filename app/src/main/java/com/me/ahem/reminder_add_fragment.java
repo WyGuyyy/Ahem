@@ -38,9 +38,10 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 
-public class reminder_add_fragment extends Fragment implements View.OnFocusChangeListener{
+public class reminder_add_fragment extends Fragment{
 
     private AhemViewModel ahemViewModel;
 
@@ -55,12 +56,16 @@ public class reminder_add_fragment extends Fragment implements View.OnFocusChang
     EditText txtSecond;
 
     Switch swDistanceType;
-    Switch getSwDistanceUnit;
+    Switch swDistanceUnit;
     Switch swSoundType;
 
     RadioButton rbCustom;
     RadioButton rbDefault;
     RadioButton rbPing;
+
+    EditText[] textFields = {txtLongitude, txtLatitude, txtAddress, txtName, txtDescription, txtDistance, txtHour, txtMinute, txtSecond};
+    Switch[] switchFields = {swDistanceType, swDistanceUnit, swDistanceType};
+    RadioButton[] radioButtonFields = {rbCustom, rbDefault, rbPing};
 
     PlacesClient placesClient;
 
@@ -75,7 +80,7 @@ public class reminder_add_fragment extends Fragment implements View.OnFocusChang
         //Initialize view
         View view = inflater.inflate(R.layout.fragment_reminder_add_fragment, container, false);
 
-        ahemViewModel = new ViewModelProvider(this, new AhemViewModelFactory(getActivity().getApplication())).get(AhemViewModel.class);
+        ahemViewModel = new ViewModelProvider(getActivity(), new AhemViewModelFactory(getActivity().getApplication())).get(AhemViewModel.class);
 
         Places.initialize(this.getActivity().getApplicationContext(), getString(R.string.api_key));
         placesClient = Places.createClient(this.getContext());
@@ -91,14 +96,14 @@ public class reminder_add_fragment extends Fragment implements View.OnFocusChang
         txtSecond = (EditText) view.findViewById(R.id.add_reminder_time_second);
 
         swDistanceType = (Switch) view.findViewById(R.id.add_reminder_distance_type);
-        getSwDistanceUnit = (Switch) view.findViewById(R.id.add_reminder_distance_unit);
+        swDistanceUnit = (Switch) view.findViewById(R.id.add_reminder_distance_unit);
         swSoundType = (Switch) view.findViewById(R.id.add_reminder_sound_type);
 
         rbCustom = (RadioButton) view.findViewById(R.id.add_reminder_sound_custom);
         rbDefault = (RadioButton) view.findViewById(R.id.add_reminder_sound_default);
         rbPing = (RadioButton) view.findViewById(R.id.add_reminder_sound_ping);
 
-        txtLongitude.setOnFocusChangeListener(this);
+        /*txtLongitude.setOnFocusChangeListener(this);
         txtLatitude.setOnFocusChangeListener(this);
 
         txtAddress.setOnFocusChangeListener(this);
@@ -110,7 +115,11 @@ public class reminder_add_fragment extends Fragment implements View.OnFocusChang
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                updateSuggestions(s);
+                //updateSuggestions(s);
+                List<String> suggestions = new ArrayList<String>();
+                suggestions.add(s.toString());
+                ArrayAdapter<String> suggestionAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
+                txtAddress.setAdapter(suggestionAdapter);
             }
 
             @Override
@@ -127,12 +136,12 @@ public class reminder_add_fragment extends Fragment implements View.OnFocusChang
         txtSecond.setOnFocusChangeListener(this);
 
         swDistanceType.setOnFocusChangeListener(this);
-        getSwDistanceUnit.setOnFocusChangeListener(this);
+        swDistanceUnit.setOnFocusChangeListener(this);
         swSoundType.setOnFocusChangeListener(this);
 
         rbCustom.setOnFocusChangeListener(this);
         rbDefault.setOnFocusChangeListener(this);
-        rbPing.setOnFocusChangeListener(this);
+        rbPing.setOnFocusChangeListener(this);*/
 
         MainActivity.mode = "add";
 
@@ -140,7 +149,7 @@ public class reminder_add_fragment extends Fragment implements View.OnFocusChang
         return view;
     }
 
-    @Override
+   /* @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if(!hasFocus) {
             updateViewModel(v);
@@ -148,10 +157,7 @@ public class reminder_add_fragment extends Fragment implements View.OnFocusChang
     }
 
     public void updateViewModel(View v){
-        String[] splitArr = v.getTag().toString().split("|");
-        Log.d("test", splitArr[1]);
-        String viewType = splitArr[0];
-        String key = splitArr[1];
+        String key = v.getTag().toString();
         String value = "";
 
         if(v instanceof EditText){
@@ -162,17 +168,9 @@ public class reminder_add_fragment extends Fragment implements View.OnFocusChang
             value = Boolean.toString(((RadioButton) v).isChecked());
         }
 
-        /*if(viewType.equals("ET")){
-            value = ((EditText) v).getText().toString();
-        }else if(viewType.equals("SW")){
-            value = Boolean.toString(((Switch) v).isChecked());
-        }else{
-            value = Boolean.toString(((RadioButton) v).isChecked());
-        }*/
-
         ahemViewModel.updateDataMap(key, value);
 
-    }
+    }*/
 
     private void updateSuggestions(CharSequence s){
 
@@ -206,5 +204,48 @@ public class reminder_add_fragment extends Fragment implements View.OnFocusChang
 
         ArrayAdapter<String> suggestionAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
         txtAddress.setAdapter(suggestionAdapter);
+    }
+
+    public boolean persistFields(){
+
+        TreeMap<String, String> dataMap = ahemViewModel.getDataMap().getValue();
+
+        for(int i = 0; i < textFields.length; i++){
+            String tag = textFields[i].getTag().toString();
+            String value = textFields[i].getText().toString();
+
+            if(!value.equals("")){
+                dataMap.put(tag, value);
+            }else{
+                return false;
+            }
+        }
+
+        for(int i = 0; i < switchFields.length; i++){
+            String tag = switchFields[i].getTag().toString();
+            String value = switchFields[i].getText().toString();
+
+            if(!value.equals("")){
+                dataMap.put(tag, value);
+            }else{
+                return false;
+            }
+        }
+
+        for(int i = 0; i < radioButtonFields.length; i++){
+            String tag = radioButtonFields[i].getTag().toString();
+            String value = radioButtonFields[i].getText().toString();
+
+            if(!value.equals("")){
+                dataMap.put(tag, value);
+            }else{
+                return false;
+            }
+        }
+
+        ahemViewModel.setDataMap(dataMap);
+
+        return true;
+
     }
 }
