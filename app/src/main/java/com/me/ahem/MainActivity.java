@@ -49,22 +49,24 @@ public class MainActivity extends AppCompatActivity {
 
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.relativeLayout, new reminder_add_fragment())
+                            .replace(R.id.relativeLayout, new reminder_add_fragment(), "ADD_FRAGMENT")
                             .addToBackStack(null)
                             .commit();
                     addButton.setImageResource(android.R.drawable.ic_menu_save);
 
                 }else if(mode.compareTo("add") == 0){
 
-                    if(((reminder_add_fragment)addReminderFragment).persistFields()) {
-                        reminderViewModel.submitDataMap(); //Start her next time, need to submit data map now
+                    reminder_add_fragment addFragment = (reminder_add_fragment) getSupportFragmentManager().findFragmentByTag("ADD_FRAGMENT");
+
+                    if(addFragment.persistFields()) {
+                        reminderViewModel.submitDataMap();
 
                         getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.relativeLayout, new reminder_add_fragment())
+                                .replace(R.id.relativeLayout, new reminder_list_fragment())
                                 .addToBackStack(null)
                                 .commit();
-                        addButton.setImageResource(android.R.drawable.ic_menu_save);
+                        addButton.setImageResource(android.R.drawable.ic_menu_add);
                     }
 
                 }else{

@@ -103,6 +103,8 @@ public class reminder_add_fragment extends Fragment{
         rbDefault = (RadioButton) view.findViewById(R.id.add_reminder_sound_default);
         rbPing = (RadioButton) view.findViewById(R.id.add_reminder_sound_ping);
 
+        textFields = {txtLongitude, txtLatitude, txtAddress, txtName, txtDescription, txtDistance, txtHour, txtMinute, txtSecond};
+
         /*txtLongitude.setOnFocusChangeListener(this);
         txtLatitude.setOnFocusChangeListener(this);
 

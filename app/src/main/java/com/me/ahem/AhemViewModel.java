@@ -70,13 +70,12 @@ public class AhemViewModel extends AndroidViewModel {
         Log.d("after", dataMap.getValue().keySet().toString());
     }*/
 
-    /*public void submitDataMap(){
+    public void submitDataMap(){
         Reminder newReminder = reminder.getValue();
         Location newLocation = location.getValue();
         Address newAddress = address.getValue();
         //TreeMap<String, String> currentDataMap = dataMap.getValue();
         TreeMap<String, String> currentDataMap = getDataMap().getValue();
-        Log.d("test", currentDataMap.keySet().toString());
 
         int time = getTimeInSeconds(Integer.parseInt(currentDataMap.get("hour")), Integer.parseInt(currentDataMap.get("minute")), Integer.parseInt(currentDataMap.get("second")));
         parseAddress(currentDataMap);
@@ -101,7 +100,9 @@ public class AhemViewModel extends AndroidViewModel {
         newAddress.setCountry("Test");
         newAddress.setZip("Test");
         address.setValue(newAddress);
-    }*/
+
+        mRepository.insertNewRowItem(reminder.getValue(), location.getValue(), address.getValue());
+    }
 
     public int getTimeInSeconds(int hours, int minutes, int seconds){
         return (hours * 3600) + (minutes * 60) + seconds;
@@ -114,7 +115,6 @@ public class AhemViewModel extends AndroidViewModel {
         TreeMap<String, String> addressMap = new TreeMap<String, String>();
 
         return addressMap;
-
     }
 
     public MutableLiveData<TreeMap<String, String>> getDataMap(){
