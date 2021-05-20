@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     reminder_add_fragment addFragment = (reminder_add_fragment) getSupportFragmentManager().findFragmentByTag("ADD_FRAGMENT");
 
                     if(addFragment.persistFields()) {
+                        Log.d("dsf", "asfsf");
                         reminderViewModel.submitDataMap();
 
                         getSupportFragmentManager()

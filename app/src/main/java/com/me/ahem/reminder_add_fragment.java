@@ -63,9 +63,9 @@ public class reminder_add_fragment extends Fragment{
     RadioButton rbDefault;
     RadioButton rbPing;
 
-    EditText[] textFields = {txtLongitude, txtLatitude, txtAddress, txtName, txtDescription, txtDistance, txtHour, txtMinute, txtSecond};
-    Switch[] switchFields = {swDistanceType, swDistanceUnit, swDistanceType};
-    RadioButton[] radioButtonFields = {rbCustom, rbDefault, rbPing};
+    EditText[] textFields;
+    Switch[] switchFields;
+    RadioButton[] radioButtonFields;
 
     PlacesClient placesClient;
 
@@ -95,15 +95,33 @@ public class reminder_add_fragment extends Fragment{
         txtMinute = (EditText) view.findViewById(R.id.add_reminder_time_minute);
         txtSecond = (EditText) view.findViewById(R.id.add_reminder_time_second);
 
+        textFields = new EditText[8];
+        textFields[0] = txtLongitude;
+        textFields[1] = txtLatitude;
+        textFields[2] = txtName;
+        textFields[3] = txtDescription;
+        textFields[4] = txtDistance;
+        textFields[5] = txtHour;
+        textFields[6] = txtMinute;
+        textFields[7] = txtSecond;
+
         swDistanceType = (Switch) view.findViewById(R.id.add_reminder_distance_type);
         swDistanceUnit = (Switch) view.findViewById(R.id.add_reminder_distance_unit);
         swSoundType = (Switch) view.findViewById(R.id.add_reminder_sound_type);
+
+        switchFields = new Switch[3];
+        switchFields[0] = swDistanceType;
+        switchFields[1] = swSoundType;
+        switchFields[2] = swDistanceUnit;
 
         rbCustom = (RadioButton) view.findViewById(R.id.add_reminder_sound_custom);
         rbDefault = (RadioButton) view.findViewById(R.id.add_reminder_sound_default);
         rbPing = (RadioButton) view.findViewById(R.id.add_reminder_sound_ping);
 
-        textFields = {txtLongitude, txtLatitude, txtAddress, txtName, txtDescription, txtDistance, txtHour, txtMinute, txtSecond};
+        radioButtonFields = new RadioButton[3];
+        radioButtonFields[0] = rbCustom;
+        radioButtonFields[1] = rbDefault;
+        radioButtonFields[2] = rbPing;
 
         /*txtLongitude.setOnFocusChangeListener(this);
         txtLatitude.setOnFocusChangeListener(this);
@@ -212,6 +230,8 @@ public class reminder_add_fragment extends Fragment{
 
         TreeMap<String, String> dataMap = ahemViewModel.getDataMap().getValue();
 
+        Log.d("test", "1");
+
         for(int i = 0; i < textFields.length; i++){
             String tag = textFields[i].getTag().toString();
             String value = textFields[i].getText().toString();
@@ -223,29 +243,45 @@ public class reminder_add_fragment extends Fragment{
             }
         }
 
+        Log.d("test", "2");
+
         for(int i = 0; i < switchFields.length; i++){
             String tag = switchFields[i].getTag().toString();
-            String value = switchFields[i].getText().toString();
+            boolean isChecked = switchFields[i].isChecked();
+            String value;
 
-            if(!value.equals("")){
+            if(tag.equals("SWDistanceTypeTag")){
+                value = (isChecked ? "Time" : "Distance");
+            }else if(tag.equals("SWDistanceUnitTag")){
+                value = (isChecked ? "M" : "KM");
+            }else{
+                value = (isChecked ? "Silent" : "Voice");
+            }
+
+            dataMap.put(tag, value);
+
+           /* if(!value.equals("")){
                 dataMap.put(tag, value);
             }else{
                 return false;
-            }
+            }*/
         }
+
+        Log.d("test", "3");
 
         for(int i = 0; i < radioButtonFields.length; i++){
             String tag = radioButtonFields[i].getTag().toString();
-            String value = radioButtonFields[i].getText().toString();
+            boolean isChecked = radioButtonFields[i].isChecked();
+            String value = (isChecked ? "ON" : "OFF");
 
-            if(!value.equals("")){
-                dataMap.put(tag, value);
-            }else{
-                return false;
-            }
+            dataMap.put(tag, value);
         }
 
+        Log.d("test", "4");
+
         ahemViewModel.setDataMap(dataMap);
+
+        Log.d("test", "5");
 
         return true;
 

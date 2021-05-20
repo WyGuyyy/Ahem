@@ -26,6 +26,8 @@ public class AhemRepository {
     AhemRepository(Application application){
         AhemRoomDatabase db = AhemRoomDatabase.getDatabase(application);
         mReminderDAO = db.reminderDAO();
+        mLocationDAO = db.locationDAO();
+        mAddressDAO = db.addressDAO();
         mAllReminders = mReminderDAO.getAllReminders();
         mAllRowItems = mReminderDAO.getAllRowItems();
     }
