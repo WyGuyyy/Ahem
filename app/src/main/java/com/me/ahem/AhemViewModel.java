@@ -22,6 +22,10 @@ public class AhemViewModel extends AndroidViewModel {
 
     private final LiveData<List<Reminder>> mAllReminders;
 
+    private final LiveData<List<Location>> mAllLocations;
+
+    private final LiveData<List<Address>> mAllAddresses;
+
     private final LiveData<List<RowItem>> mAllRowItems;
 
     private MutableLiveData<Reminder> reminder;
@@ -36,6 +40,8 @@ public class AhemViewModel extends AndroidViewModel {
         super(application);
         mRepository = new AhemRepository(application);
         mAllReminders = mRepository.getAllReminders();
+        mAllLocations = mRepository.getAllLocations();
+        mAllAddresses = mRepository.getmAllAddresses();
         mAllRowItems = mRepository.getAllRowItems();
 
         dataMap = new MutableLiveData<TreeMap<String, String>>();
@@ -49,7 +55,14 @@ public class AhemViewModel extends AndroidViewModel {
         address.setValue(new Address());
     }
 
-    LiveData<List<Reminder>> getAllReminders() {return mAllReminders;}
+    LiveData<List<Reminder>> getAllReminders() {
+
+        List<Reminder> allReminders = mAllReminders.getValue();
+        List<Location> allLocations = mAllLocations.getValue();
+        List<Address> allAddresses = mAllAddresses.getValue();
+
+        return mAllReminders;
+    }
 
     LiveData<List<RowItem>> getAllRowItems() {return mAllRowItems;}
 
@@ -87,12 +100,6 @@ public class AhemViewModel extends AndroidViewModel {
         newReminder.setReminderDescription(currentDataMap.get("description"));
         reminder.setValue(newReminder);
 
-        newLocation.setLongitude(Float.parseFloat(currentDataMap.get("longitude")));
-        newLocation.setLatitude(Float.parseFloat(currentDataMap.get("latitude")));
-        newLocation.setRadius(Float.parseFloat(currentDataMap.get("distance_amount")));
-        newLocation.setTime(time);
-        location.setValue(newLocation);
-
         //Need to figure out how to parse address here to store
         TreeMap<String, String> addressMap = parseAddress(currentDataMap);
 
@@ -103,6 +110,16 @@ public class AhemViewModel extends AndroidViewModel {
         newAddress.setCountry("Test");
         newAddress.setZip("Test");
         address.setValue(newAddress);
+
+        newLocation.setLongitude(Float.parseFloat(currentDataMap.get("longitude")));
+        newLocation.setLatitude(Float.parseFloat(currentDataMap.get("latitude")));
+        newLocation.setRadius(Float.parseFloat(currentDataMap.get("distance_amount")));
+        newLocation.setTime(time);
+        newLocation.setReminderID(newReminder.getReminderID());
+        newLocation.setAddressID(newAddress.getAddressID());
+        String testString = newReminder.getReminderID() + "|||" + newAddress.getAddressID();
+        Log.d("ids", testString);
+        location.setValue(newLocation);
 
         mRepository.insertNewRowItem(reminder.getValue(), location.getValue(), address.getValue());
     }

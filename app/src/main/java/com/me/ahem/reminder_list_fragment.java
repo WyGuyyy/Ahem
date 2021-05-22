@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.me.ahem.address.AddressViewModel;
 import com.me.ahem.location.LocationViewModel;
+import com.me.ahem.reminder.Reminder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +63,18 @@ public class reminder_list_fragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.reminder_list);
         listView.setAdapter(new ReminderAdapter(getActivity(), reminderList));
 
+        /*reminderViewModel.getAllReminders().observe(this, items -> {
+
+        });*/
+
         reminderViewModel.getAllRowItems().observe(this, items -> {
+            Log.d("go", "gooooooo");
+            if(items.size() != 0) {
+                Log.d("Made", items.get(0).getName());
+            }
+
             reminderAdapter.setData(items);
+            listView.setAdapter(reminderAdapter);
         });
 
        /* addButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButton);

@@ -1,6 +1,7 @@
 package com.me.ahem;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -21,6 +22,8 @@ public class AhemRepository {
     private AddressDAO mAddressDAO;
 
     private LiveData<List<Reminder>> mAllReminders;
+    private final LiveData<List<Location>> mAllLocations;
+    private final LiveData<List<Address>> mAllAddresses;
     private LiveData<List<RowItem>> mAllRowItems;
 
     AhemRepository(Application application){
@@ -29,6 +32,8 @@ public class AhemRepository {
         mLocationDAO = db.locationDAO();
         mAddressDAO = db.addressDAO();
         mAllReminders = mReminderDAO.getAllReminders();
+        mAllLocations = mLocationDAO.getAllLocations();
+        mAllAddresses = mAddressDAO.getAllAddresses();
         mAllRowItems = mReminderDAO.getAllRowItems();
     }
 
@@ -36,8 +41,16 @@ public class AhemRepository {
         return mAllReminders;
     }
 
+    LiveData<List<Location>> getAllLocations(){
+        return mAllLocations;
+    }
+
+    LiveData<List<Address>> getmAllAddresses(){
+        return mAllAddresses;
+    }
+
     LiveData<List<RowItem>> getAllRowItems(){
-        return mAllRowItems;
+         return mAllRowItems;
     }
 
     void insert(Reminder reminder){

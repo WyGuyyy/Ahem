@@ -1,16 +1,37 @@
 package com.me.ahem;
 
+import androidx.room.ColumnInfo;
+
 public class RowItem {
 
+    @ColumnInfo(name = "name")
     String name;
+
+    @ColumnInfo(name = "radius")
     double radius;
+
+    @ColumnInfo(name = "latitude")
     double latitude;
+
+    @ColumnInfo(name = "longitude")
     double longitude;
+
+    @ColumnInfo(name = "street")
     String street;
+
+    @ColumnInfo(name = "street_number")
     int street_number;
+
+    @ColumnInfo(name = "city")
     String city;
+
+    @ColumnInfo(name = "state")
     String state;
+
+    @ColumnInfo(name = "zip")
     int zip;
+
+    @ColumnInfo(name = "country")
     String country;
 
     public RowItem(){
