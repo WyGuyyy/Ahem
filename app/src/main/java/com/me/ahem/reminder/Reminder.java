@@ -11,7 +11,7 @@ public class Reminder {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "reminder_id")
-    private int reminderID;
+    private long reminderID;
 
     @ColumnInfo(name = "name")
     private String name;
@@ -38,11 +38,11 @@ public class Reminder {
                 '}';
     }
 
-    public int getReminderID() {
+    public long getReminderID() {
         return reminderID;
     }
 
-    public void setReminderID(int reminderID) {
+    public void setReminderID(long reminderID) {
         this.reminderID = reminderID;
     }
 

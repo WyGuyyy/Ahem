@@ -26,6 +26,8 @@ public class AhemRepository {
     private final LiveData<List<Address>> mAllAddresses;
     private LiveData<List<RowItem>> mAllRowItems;
 
+    long id;
+
     AhemRepository(Application application){
         AhemRoomDatabase db = AhemRoomDatabase.getDatabase(application);
         mReminderDAO = db.reminderDAO();
@@ -53,10 +55,28 @@ public class AhemRepository {
          return mAllRowItems;
     }
 
-    void insert(Reminder reminder){
+    long insertReminder(Reminder reminder){
         AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mReminderDAO.insert(reminder);
+           id = mReminderDAO.insert(reminder);
         });
+
+        return id;
+    }
+
+    long insertLocation(Location location){
+        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
+           id = mLocationDAO.insert(location);
+        });
+
+        return id;
+    }
+
+    long insertAddress(Address address){
+        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
+            id = mAddressDAO.insert(address);
+        });
+
+        return id;
     }
 
     void insertNewRowItem(Reminder reminder, Location location, Address address){

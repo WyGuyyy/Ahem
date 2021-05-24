@@ -3,6 +3,7 @@ package com.me.ahem;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class reminder_details_fragment extends Fragment implements View.OnFocusChangeListener{
@@ -38,6 +40,8 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
     RadioButton rbCustom;
     RadioButton rbDefault;
     RadioButton rbPing;
+
+    FloatingActionButton editButton;
 
     public reminder_details_fragment() {
         // Required empty public constructor
@@ -68,23 +72,18 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
         rbDefault = (RadioButton) getActivity().findViewById(R.id.reminder_details_sound_default);
         rbPing = (RadioButton) getActivity().findViewById(R.id.reminder_details_sound_ping);
 
-        txtLongitude.setOnFocusChangeListener(this);
-        txtLatitude.setOnFocusChangeListener(this);
-        txtAddress.setOnFocusChangeListener(this);
-        txtName.setOnFocusChangeListener(this);
-        txtDescription.setOnFocusChangeListener(this);
-        txtDistance.setOnFocusChangeListener(this);
-        txtHour.setOnFocusChangeListener(this);
-        txtMinute.setOnFocusChangeListener(this);
-        txtSecond.setOnFocusChangeListener(this);
+        editButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonDetail);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        swDistanceType.setOnFocusChangeListener(this);
-        getSwDistanceUnit.setOnFocusChangeListener(this);
-        swSoundType.setOnFocusChangeListener(this);
-
-        rbCustom.setOnFocusChangeListener(this);
-        rbDefault.setOnFocusChangeListener(this);
-        rbPing.setOnFocusChangeListener(this);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        //.replace(R.id.relativeLayout, new reminder_add_fragment())
+                        .replace(R.id.frame_layout_controls, new reminder_add_fragment())
+                        .commit();
+                }
+        });
 
         MainActivity.mode = "detail";
 

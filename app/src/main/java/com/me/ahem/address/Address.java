@@ -11,7 +11,7 @@ public class Address {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "address_id")
-    private int addressID;
+    private long addressID;
 
     @ColumnInfo(name = "street")
     private String street;
@@ -58,11 +58,11 @@ public class Address {
                 '}';
     }
 
-    public int getAddressID() {
+    public long getAddressID() {
         return addressID;
     }
 
-    public void setAddressID(int addressID) {
+    public void setAddressID(long addressID) {
         this.addressID = addressID;
     }
 

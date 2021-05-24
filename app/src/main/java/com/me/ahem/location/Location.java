@@ -11,13 +11,13 @@ public class Location {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "location_id")
-    private int locationID;
+    private long locationID;
 
     @ColumnInfo(name = "reminder_id")
-    private int reminderID;
+    private long reminderID;
 
     @ColumnInfo(name = "address_id")
-    private int addressID;
+    private long addressID;
 
     @ColumnInfo(name = "longitude")
     private float longitude;
@@ -58,27 +58,27 @@ public class Location {
                 '}';
     }
 
-    public int getLocationID() {
+    public long getLocationID() {
         return locationID;
     }
 
-    public void setLocationID(int locationID) {
+    public void setLocationID(long locationID) {
         this.locationID = locationID;
     }
 
-    public int getReminderID() {
+    public long getReminderID() {
         return reminderID;
     }
 
-    public void setReminderID(int reminderID) {
+    public void setReminderID(long reminderID) {
         this.reminderID = reminderID;
     }
 
-    public int getAddressID() {
+    public long getAddressID() {
         return addressID;
     }
 
-    public void setAddressID(int addressID) {
+    public void setAddressID(long addressID) {
         this.addressID = addressID;
     }
 

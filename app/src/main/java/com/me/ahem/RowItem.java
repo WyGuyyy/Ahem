@@ -34,6 +34,15 @@ public class RowItem {
     @ColumnInfo(name = "country")
     String country;
 
+    @ColumnInfo(name = "reminder_id")
+    long reminderID;
+
+    @ColumnInfo(name = "location_id")
+    long locationID;
+
+    @ColumnInfo(name = "address_id")
+    long addressID;
+
     public RowItem(){
 
     }
@@ -136,4 +145,27 @@ public class RowItem {
         return street_number + " " + street + " " + city + " " + state + " " + country + " " + zip;
     }
 
+    public long getReminderID() {
+        return reminderID;
+    }
+
+    public void setReminderID(long reminderID){
+        this.reminderID = reminderID;
+    }
+
+    public long getLocationID(){
+        return locationID;
+    }
+
+    public void setLocationID(long locationID){
+        this.locationID = locationID;
+    }
+
+    public long getAddressID(){
+        return addressID;
+    }
+
+    public void setAddressID(long addressID){
+        this.addressID = addressID;
+    }
 }

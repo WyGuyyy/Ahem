@@ -3,6 +3,7 @@ package com.me.ahem;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
@@ -35,6 +36,7 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +64,8 @@ public class reminder_add_fragment extends Fragment{
     RadioButton rbCustom;
     RadioButton rbDefault;
     RadioButton rbPing;
+
+    FloatingActionButton saveButton;
 
     EditText[] textFields;
     Switch[] switchFields;
@@ -94,6 +98,27 @@ public class reminder_add_fragment extends Fragment{
         txtHour = (EditText) view.findViewById(R.id.add_reminder_time_hour);
         txtMinute = (EditText) view.findViewById(R.id.add_reminder_time_minute);
         txtSecond = (EditText) view.findViewById(R.id.add_reminder_time_second);
+
+        saveButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonAdd);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                reminder_add_fragment addFragment = (reminder_add_fragment) getActivity().getSupportFragmentManager().findFragmentByTag("ADD_FRAGMENT");
+
+                if(addFragment.persistFields()) {
+                    ahemViewModel.submitDataMap();
+                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            //.replace(R.id.relativeLayout, new reminder_add_fragment())
+                            .replace(R.id.frame_layout_controls, new reminder_list_fragment())
+                            .commit();
+                }
+                }
+
+         });
 
         textFields = new EditText[8];
         textFields[0] = txtLongitude;

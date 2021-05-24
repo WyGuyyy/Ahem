@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     Fragment reminderListFragment;
     Fragment addReminderFragment;
     Fragment reminderDetailsFragment;
-    FloatingActionButton addButton;
+    //FloatingActionButton addButton;
 
     public static String mode;
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //reminderViewModel = new AhemViewModel(getApplication());
-        reminderViewModel =  new ViewModelProvider(this, new AhemViewModelFactory(getApplication())).get(AhemViewModel.class);
+        reminderViewModel = new ViewModelProvider(this, new AhemViewModelFactory(getApplication())).get(AhemViewModel.class);
 
         //Initialze fragment
         mapFragment = new MapFragment();
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         addReminderFragment = new reminder_add_fragment();
         reminderDetailsFragment = new reminder_details_fragment();
 
-        addButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+       /* addButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        }); */
 
         //Open fragment
         getSupportFragmentManager()

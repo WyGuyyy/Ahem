@@ -376,13 +376,6 @@
                             android:layout_height="wrap_content"
                             android:text="Custom" />
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/add_reminder_sound_custom_record"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:src="@android:drawable/ic_btn_speak_now" />
-
                     </LinearLayout>
 
                     <RadioButton
@@ -401,6 +394,19 @@
                 </RadioGroup>
 
             </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButtonAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@android:drawable/ic_menu_save"
+                android:tint="#000000"
+                app:backgroundTint="#00b02f"
+                android:layout_gravity="bottom|right"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"/>
 
         </LinearLayout>
 

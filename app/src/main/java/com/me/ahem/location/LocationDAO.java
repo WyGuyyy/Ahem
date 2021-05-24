@@ -12,7 +12,7 @@ import java.util.List;
 public interface LocationDAO {
 
         @Insert(onConflict = OnConflictStrategy.ABORT)
-        void insert(Location location);
+        long insert(Location location);
 
         @Query("DELETE FROM LOCATION_TABLE")
         void deleteAll();

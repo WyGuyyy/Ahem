@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -62,32 +63,43 @@ public class reminder_list_fragment extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.reminder_list);
         listView.setAdapter(new ReminderAdapter(getActivity(), reminderList));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                RowItem rowItem =  (RowItem) parent.getItemAtPosition(position);
+
+                reminderViewModel.setRowItem(rowItem);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        //.replace(R.id.relativeLayout, new reminder_add_fragment())
+                        .replace(R.id.frame_layout_controls, new reminder_details_fragment(), "DETAIL_FRAGMENT")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         /*reminderViewModel.getAllReminders().observe(this, items -> {
 
         });*/
 
         reminderViewModel.getAllRowItems().observe(this, items -> {
-            Log.d("go", "gooooooo");
-            if(items.size() != 0) {
-                Log.d("Made", items.get(0).getName());
-            }
-
             reminderAdapter.setData(items);
             listView.setAdapter(reminderAdapter);
         });
 
-       /* addButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButton);
+        addButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonList);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v("d", "made it");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.relativeLayout, new reminder_add_fragment())
+                        //.replace(R.id.relativeLayout, new reminder_add_fragment())
+                        .replace(R.id.frame_layout_controls, new reminder_add_fragment(), "ADD_FRAGMENT")
+                        .addToBackStack(null)
                         .commit();
             }
-        });*/
+        });
 
         MainActivity.mode = "list";
 
