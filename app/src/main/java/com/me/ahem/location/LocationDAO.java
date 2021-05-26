@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.me.ahem.reminder.Reminder;
+
 import java.util.List;
 
 @Dao
@@ -19,5 +21,8 @@ public interface LocationDAO {
 
         @Query("SELECT * FROM LOCATION_TABLE")
         LiveData<List<Location>> getAllLocations();
+
+        @Query("SELECT * FROM LOCATION_TABLE WHERE location_id = :locationID")
+        Location getLocationFromDatabase(long locationID);
 
 }

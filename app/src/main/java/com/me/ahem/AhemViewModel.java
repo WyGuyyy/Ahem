@@ -36,6 +36,8 @@ public class AhemViewModel extends AndroidViewModel {
 
     private MutableLiveData<RowItem> rowItem;
 
+    private MutableLiveData<String> mode;
+
     private MutableLiveData<TreeMap<String, String>> dataMap;
 
     public AhemViewModel(Application application){
@@ -156,6 +158,42 @@ public class AhemViewModel extends AndroidViewModel {
 
     public void setRowItem(RowItem newRowItem){
         rowItem.setValue(newRowItem);
+    }
+
+    public void setMode(String newMode){
+        mode.setValue(newMode);
+    }
+
+    public RowItem getRowItem(){
+        return rowItem.getValue();
+    }
+
+    public Reminder getReminder(){
+        return reminder.getValue();
+    }
+
+    public Location getLocation(){
+        return location.getValue();
+    }
+
+    public Address getAddress(){
+        return address.getValue();
+    }
+
+    public void getReminderFromDatabase(long reminderID){
+        reminder.setValue(mRepository.getReminderFromDatabase(reminderID));
+    }
+
+    public void getLocationFromDatabase(long locationID){
+        location.setValue(mRepository.getLocationFromDatabase(locationID));
+    }
+
+    public void getAddressFromDatabase(long addressID){
+        address.setValue(mRepository.getAddressFromDatabase(addressID));
+    }
+
+    public String getMode(){
+        return mode.getValue();
     }
 
 }

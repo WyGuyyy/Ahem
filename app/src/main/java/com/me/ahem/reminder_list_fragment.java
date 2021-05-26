@@ -70,6 +70,10 @@ public class reminder_list_fragment extends Fragment {
                 RowItem rowItem =  (RowItem) parent.getItemAtPosition(position);
 
                 reminderViewModel.setRowItem(rowItem);
+                reminderViewModel.getReminderFromDatabase(rowItem.getReminderID());
+                reminderViewModel.getLocationFromDatabase(rowItem.getLocationID());
+                reminderViewModel.getAddressFromDatabase(rowItem.getAddressID());
+
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         //.replace(R.id.relativeLayout, new reminder_add_fragment())

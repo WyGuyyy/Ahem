@@ -26,4 +26,6 @@ public interface ReminderDAO
     @Query("SELECT r.name, r.reminder_id, l.radius, l.latitude, l.longitude, l.location_id, a.street, a.street_number, a.city, a.state, a.zip, a.country, a.address_id FROM REMINDER_TABLE as r, LOCATION_TABLE as l, ADDRESS_TABLE as a WHERE r.reminder_id = l.reminder_id AND l.address_id = a.address_id")
     LiveData<List<RowItem>> getAllRowItems();
 
+    @Query("SELECT * FROM REMINDER_TABLE WHERE reminder_id = :reminderID")
+    Reminder getReminderFromDatabase(long reminderID);
 }

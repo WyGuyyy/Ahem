@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.me.ahem.reminder.Reminder;
+
 import java.util.List;
 
 @Dao
@@ -19,5 +21,8 @@ public interface AddressDAO {
 
     @Query("SELECT * FROM ADDRESS_TABLE")
     LiveData<List<Address>> getAllAddresses();
+
+    @Query("SELECT * FROM ADDRESS_TABLE WHERE address_id = :addressID")
+    Address getAddressFromDatabase(long addressID);
 
 }

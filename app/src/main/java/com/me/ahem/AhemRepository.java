@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.me.ahem.AhemRoomDatabase;
 import com.me.ahem.address.Address;
 import com.me.ahem.address.AddressDAO;
+import com.me.ahem.address.AddressRepository;
 import com.me.ahem.location.Location;
 import com.me.ahem.location.LocationDAO;
 import com.me.ahem.reminder.Reminder;
@@ -20,6 +21,10 @@ public class AhemRepository {
     private ReminderDAO mReminderDAO;
     private LocationDAO mLocationDAO;
     private AddressDAO mAddressDAO;
+
+    Reminder reminder;
+    Location location;
+    Address address;
 
     private LiveData<List<Reminder>> mAllReminders;
     private final LiveData<List<Location>> mAllLocations;
@@ -85,6 +90,30 @@ public class AhemRepository {
             mLocationDAO.insert(location);
             mAddressDAO.insert(address);
         });
+    }
+
+    public Reminder getReminderFromDatabase(long reminderID){
+        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
+            reminder = mReminderDAO.getReminderFromDatabase(reminderID);
+        });
+
+        return reminder;
+    }
+
+    public Location getLocationFromDatabase(long locationID){
+        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
+            location = mLocationDAO.getLocationFromDatabase(locationID);
+        });
+
+        return location;
+    }
+
+    public Address getAddressFromDatabase(long addressID){
+        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
+            address = mAddressDAO.getAddressFromDatabase(addressID);
+        });
+
+        return address;
     }
 
 }
