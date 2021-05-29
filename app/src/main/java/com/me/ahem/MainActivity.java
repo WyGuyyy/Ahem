@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         //reminderViewModel = new AhemViewModel(getApplication());
         reminderViewModel = new ViewModelProvider(this, new AhemViewModelFactory(getApplication())).get(AhemViewModel.class);
+        reminderViewModel.setMode("list");
 
         //Initialze fragment
         mapFragment = new MapFragment();

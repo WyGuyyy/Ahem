@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.me.ahem.address.AddressViewModel;
+import com.me.ahem.location.Location;
 import com.me.ahem.location.LocationViewModel;
 import com.me.ahem.reminder.Reminder;
 
@@ -36,7 +37,7 @@ public class reminder_list_fragment extends Fragment {
 
     ReminderAdapter reminderAdapter;
 
-    private AhemViewModel reminderViewModel;
+    private AhemViewModel ahemViewModel;
     //private LocationViewModel locationViewModel;
     //private AddressViewModel addressViewModel;
 
@@ -54,7 +55,7 @@ public class reminder_list_fragment extends Fragment {
 
         reminderAdapter = new ReminderAdapter(getActivity(), reminderList);
 
-        reminderViewModel = new ViewModelProvider(this, new AhemViewModelFactory(getActivity().getApplication())).get(AhemViewModel.class);
+        ahemViewModel = new ViewModelProvider(getActivity(), new AhemViewModelFactory(getActivity().getApplication())).get(AhemViewModel.class);
         //locationViewModel = new ViewModelProvider(this, new AhemViewModelFactory(getActivity().getApplication())).get(LocationViewModel.class);
         //addressViewModel = new ViewModelProvider(this, new AhemViewModelFactory(getActivity().getApplication())).get(AddressViewModel.class);
 
@@ -69,10 +70,16 @@ public class reminder_list_fragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RowItem rowItem =  (RowItem) parent.getItemAtPosition(position);
 
-                reminderViewModel.setRowItem(rowItem);
-                reminderViewModel.getReminderFromDatabase(rowItem.getReminderID());
-                reminderViewModel.getLocationFromDatabase(rowItem.getLocationID());
-                reminderViewModel.getAddressFromDatabase(rowItem.getAddressID());
+                ahemViewModel.setRowItem(rowItem);
+                Log.d("reminderID", Long.toString(rowItem.getReminderID()));
+                ahemViewModel.getReminderFromDatabase(rowItem.getReminderID());
+                Log.d("locationID", Long.toString(rowItem.getLocationID()));
+                ahemViewModel.getLocationFromDatabase(rowItem.getLocationID());
+                Log.d("addressID", Long.toString(rowItem.getAddressID()));
+                ahemViewModel.getAddressFromDatabase(rowItem.getAddressID());
+                Location location = ahemViewModel.getLocation();
+                Log.d("location", Float.toString(location.getLongitude()));
+                ahemViewModel.setMode("detail");
 
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
@@ -87,7 +94,7 @@ public class reminder_list_fragment extends Fragment {
 
         });*/
 
-        reminderViewModel.getAllRowItems().observe(this, items -> {
+        ahemViewModel.getAllRowItems().observe(this, items -> {
             reminderAdapter.setData(items);
             listView.setAdapter(reminderAdapter);
         });
@@ -96,6 +103,9 @@ public class reminder_list_fragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ahemViewModel.setMode("add");
+
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         //.replace(R.id.relativeLayout, new reminder_add_fragment())
@@ -104,8 +114,6 @@ public class reminder_list_fragment extends Fragment {
                         .commit();
             }
         });
-
-        MainActivity.mode = "list";
 
         // Inflate the layout for this fragment
         return view;

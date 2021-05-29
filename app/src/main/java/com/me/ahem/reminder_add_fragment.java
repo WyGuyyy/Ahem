@@ -66,6 +66,7 @@ public class reminder_add_fragment extends Fragment{
     RadioButton rbPing;
 
     FloatingActionButton saveButton;
+    FloatingActionButton backButton;
 
     EditText[] textFields;
     Switch[] switchFields;
@@ -100,6 +101,8 @@ public class reminder_add_fragment extends Fragment{
         txtSecond = (EditText) view.findViewById(R.id.add_reminder_time_second);
 
         saveButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonAdd);
+        backButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonBackAdd);
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,18 +110,39 @@ public class reminder_add_fragment extends Fragment{
                 reminder_add_fragment addFragment = (reminder_add_fragment) getActivity().getSupportFragmentManager().findFragmentByTag("ADD_FRAGMENT");
 
                 if(addFragment.persistFields()) {
-                    ahemViewModel.submitDataMap();
-                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            //.replace(R.id.relativeLayout, new reminder_add_fragment())
-                            .replace(R.id.frame_layout_controls, new reminder_list_fragment())
-                            .commit();
+                    ahemViewModel.submitDataMap();
+
+                    if(ahemViewModel.getMode().equals("edit")){
+
+                        ahemViewModel.setMode("detail");
+                        getActivity().getSupportFragmentManager().popBackStack();
+
+                    }else {
+
+                        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                        ahemViewModel.setMode("list");
+
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                //.replace(R.id.relativeLayout, new reminder_add_fragment())
+                                .replace(R.id.frame_layout_controls, new reminder_list_fragment())
+                                .commit();
+                    }
                 }
-                }
+            }
 
          });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ahemViewModel.setMode("list");
+
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
         textFields = new EditText[8];
         textFields[0] = txtLongitude;
@@ -187,8 +211,6 @@ public class reminder_add_fragment extends Fragment{
         rbCustom.setOnFocusChangeListener(this);
         rbDefault.setOnFocusChangeListener(this);
         rbPing.setOnFocusChangeListener(this);*/
-
-        MainActivity.mode = "add";
 
         // Inflate the layout for this fragment
         return view;

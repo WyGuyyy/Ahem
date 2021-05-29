@@ -54,6 +54,8 @@ public class AhemViewModel extends AndroidViewModel {
         address = new MutableLiveData<Address>();
         rowItem = new MutableLiveData<RowItem>();
 
+        mode = new MutableLiveData<String>();
+
         dataMap.setValue(new TreeMap<String, String>());
         reminder.setValue(new Reminder());
         location.setValue(new Location());
@@ -104,6 +106,8 @@ public class AhemViewModel extends AndroidViewModel {
         newReminder.setName(currentDataMap.get("name"));
         newReminder.setReminderDescription(currentDataMap.get("description"));
         reminder.setValue(newReminder);
+
+        Log.d("labelll", currentDataMap.get("description"));
 
         long reminderID = mRepository.insertReminder(reminder.getValue());
 

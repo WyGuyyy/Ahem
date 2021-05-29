@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
     RadioButton rbPing;
 
     FloatingActionButton editButton;
+    FloatingActionButton backButton;
 
     public reminder_details_fragment() {
         // Required empty public constructor
@@ -84,19 +86,32 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
         rbPing = (RadioButton) view.findViewById(R.id.reminder_details_sound_ping);
 
         editButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonDetail);
+        backButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonBackDetail);
+
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                editButton.setImageResource(android.R.drawable.ic_menu_save);
+                ahemViewModel.setMode("edit");
 
-                /*getActivity().getSupportFragmentManager()
+                getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         //.replace(R.id.relativeLayout, new reminder_add_fragment())
                         .replace(R.id.frame_layout_controls, new reminder_add_fragment())
-                        .commit();*/
+                        .commit();
                 }
         });
+
+        backButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                ahemViewModel.setMode("list");
+
+                getActivity().getSupportFragmentManager().popBackStack();
+                }
+            }
+        );
 
         txtLongitude.setText(Float.toString(location.getLongitude()));
         txtLatitude.setText(Float.toString(location.getLatitude()));
@@ -113,8 +128,6 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
         txtSecond.setText(Integer.toString(location.getTime()));
 
         swDistanceType.setChecked(true);
-
-        MainActivity.mode = "detail";
 
         // Inflate the layout for this fragment
         return view;

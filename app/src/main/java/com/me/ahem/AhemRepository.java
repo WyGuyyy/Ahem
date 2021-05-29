@@ -15,6 +15,7 @@ import com.me.ahem.reminder.Reminder;
 import com.me.ahem.reminder.ReminderDAO;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class AhemRepository {
 
@@ -30,8 +31,6 @@ public class AhemRepository {
     private final LiveData<List<Location>> mAllLocations;
     private final LiveData<List<Address>> mAllAddresses;
     private LiveData<List<RowItem>> mAllRowItems;
-
-    long id;
 
     AhemRepository(Application application){
         AhemRoomDatabase db = AhemRoomDatabase.getDatabase(application);
@@ -61,25 +60,49 @@ public class AhemRepository {
     }
 
     long insertReminder(Reminder reminder){
-        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
-           id = mReminderDAO.insert(reminder);
-        });
+        long id = 0;
+
+        try {
+            id = AhemRoomDatabase.databaseWriteExecutor.submit(() -> {
+               return mReminderDAO.insert(reminder);
+            }).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return id;
     }
 
-    long insertLocation(Location location){
-        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
-           id = mLocationDAO.insert(location);
-        });
+    long insertLocation(Location location) {
+        long id = 0;
+
+        try {
+            id = AhemRoomDatabase.databaseWriteExecutor.submit(() -> {
+               return mLocationDAO.insert(location);
+            }).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return id;
     }
 
     long insertAddress(Address address){
-        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
-            id = mAddressDAO.insert(address);
-        });
+        long id = 0;
+
+        try {
+            id = AhemRoomDatabase.databaseWriteExecutor.submit(() -> {
+                return mAddressDAO.insert(address);
+            }).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return id;
     }
@@ -93,25 +116,51 @@ public class AhemRepository {
     }
 
     public Reminder getReminderFromDatabase(long reminderID){
-        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
-            reminder = mReminderDAO.getReminderFromDatabase(reminderID);
-        });
+
+        Reminder reminder = null;
+
+        try {
+            reminder = AhemRoomDatabase.databaseWriteExecutor.submit(() -> {
+                return mReminderDAO.getReminderFromDatabase(reminderID);
+            }).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return reminder;
     }
 
     public Location getLocationFromDatabase(long locationID){
-        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
-            location = mLocationDAO.getLocationFromDatabase(locationID);
-        });
+        Location location = null;
+
+        try {
+            location = AhemRoomDatabase.databaseWriteExecutor.submit(() -> {
+                return mLocationDAO.getLocationFromDatabase(locationID);
+            }).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return location;
     }
 
     public Address getAddressFromDatabase(long addressID){
-        AhemRoomDatabase.databaseWriteExecutor.execute(() -> {
-            address = mAddressDAO.getAddressFromDatabase(addressID);
-        });
+
+        Address address = null;
+
+        try {
+            address = AhemRoomDatabase.databaseWriteExecutor.submit(() -> {
+                return mAddressDAO.getAddressFromDatabase(addressID);
+            }).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return address;
     }
