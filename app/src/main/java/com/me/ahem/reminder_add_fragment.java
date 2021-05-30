@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -75,6 +76,7 @@ public class reminder_add_fragment extends Fragment{
 
     FloatingActionButton saveButton;
     FloatingActionButton backButton;
+    FloatingActionButton recordButton;
 
     EditText[] textFields;
     ToggleButton[] switchFields;
@@ -110,6 +112,7 @@ public class reminder_add_fragment extends Fragment{
 
         saveButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonAdd);
         backButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonBackAdd);
+        recordButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonRecordAdd);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +189,44 @@ public class reminder_add_fragment extends Fragment{
         swDistanceUnit = (ToggleButton) view.findViewById(R.id.add_reminder_distance_unit);
         swSoundType = (ToggleButton) view.findViewById(R.id.add_reminder_sound_type);
 
+        swDistanceUnit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(((ToggleButton)v).isChecked()){
+
+                }else{
+
+                }
+            }
+        });
+
+        swDistanceType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean distanceTypeState = ((ToggleButton)v).isChecked();
+
+                swDistanceUnit.setEnabled(!distanceTypeState);
+                txtDistance.setEnabled(!distanceTypeState);
+
+                txtHour.setEnabled(distanceTypeState);
+                txtMinute.setEnabled(distanceTypeState);
+                txtSecond.setEnabled(distanceTypeState);
+            }
+        });
+
+        swSoundType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean soundTypeState = ((ToggleButton) v).isChecked();
+
+                rbCustom.setEnabled(!soundTypeState);
+                rbDefault.setEnabled(!soundTypeState);
+                rbPing.setEnabled(!soundTypeState);
+                recordButton.setEnabled(!soundTypeState);
+
+            }
+        });
+
         switchFields = new ToggleButton[3];
         switchFields[0] = swDistanceType;
         switchFields[1] = swSoundType;
@@ -195,6 +236,53 @@ public class reminder_add_fragment extends Fragment{
         rbDefault = (RadioButton) view.findViewById(R.id.add_reminder_sound_default);
         rbPing = (RadioButton) view.findViewById(R.id.add_reminder_sound_ping);
 
+        rbCustom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean customState = ((RadioButton)v).isChecked();
+
+                if(customState){
+                    rbCustom.setChecked(true);
+                    rbDefault.setChecked(false);
+                    rbPing.setChecked(false);
+
+                    recordButton.setEnabled(true);
+                }
+            }
+        });
+
+        rbDefault.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean defaultState = ((RadioButton)v).isChecked();
+
+                if(defaultState){
+                    rbCustom.setChecked(false);
+                    rbDefault.setChecked(true);
+                    rbPing.setChecked(false);
+
+                    recordButton.setEnabled(false);
+                }
+            }
+        });
+
+        rbPing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                boolean pingState = ((RadioButton)v).isChecked();
+
+                if(pingState) {
+                    rbCustom.setChecked(false);
+                    rbDefault.setChecked(false);
+                    rbPing.setChecked(true);
+
+                    recordButton.setEnabled(false);
+                }
+             }
+        });
+
+
         radioButtonFields = new RadioButton[3];
         radioButtonFields[0] = rbCustom;
         radioButtonFields[1] = rbDefault;
@@ -203,6 +291,22 @@ public class reminder_add_fragment extends Fragment{
         if(ahemViewModel.getMode().equals("edit")){
             fillFieldsToEdit();
         }
+
+        boolean distanceTypeState = swDistanceType.isChecked();
+
+        swDistanceUnit.setEnabled(!distanceTypeState);
+        txtDistance.setEnabled(!distanceTypeState);
+
+        txtHour.setEnabled(distanceTypeState);
+        txtMinute.setEnabled(distanceTypeState);
+        txtSecond.setEnabled(distanceTypeState);
+
+        boolean soundTypeState = swSoundType.isChecked();
+
+        rbCustom.setEnabled(!soundTypeState);
+        rbDefault.setEnabled(!soundTypeState);
+        rbPing.setEnabled(!soundTypeState);
+        recordButton.setEnabled(!soundTypeState);
 
         // Inflate the layout for this fragment
         return view;

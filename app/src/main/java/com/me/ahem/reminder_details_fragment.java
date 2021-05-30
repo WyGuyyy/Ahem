@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Switch;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,9 +41,9 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
     EditText txtMinute;
     EditText txtSecond;
 
-    Switch swDistanceType;
-    Switch getSwDistanceUnit;
-    Switch swSoundType;
+    ToggleButton swDistanceType;
+    ToggleButton getSwDistanceUnit;
+    ToggleButton swSoundType;
 
     RadioButton rbCustom;
     RadioButton rbDefault;
@@ -77,9 +78,9 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
         txtMinute = (EditText) view.findViewById(R.id.reminder_details_time_minute);
         txtSecond = (EditText) view.findViewById(R.id.reminder_details_time_second);
 
-        swDistanceType = (Switch) view.findViewById(R.id.reminder_details_distance_type);
-        getSwDistanceUnit = (Switch) view.findViewById(R.id.reminder_details_distance_unit);
-        swSoundType = (Switch) view.findViewById(R.id.reminder_details_sound_type);
+        swDistanceType = (ToggleButton) view.findViewById(R.id.reminder_details_distance_type);
+        getSwDistanceUnit = (ToggleButton) view.findViewById(R.id.reminder_details_distance_unit);
+        swSoundType = (ToggleButton) view.findViewById(R.id.reminder_details_sound_type);
 
         rbCustom = (RadioButton) view.findViewById(R.id.reminder_details_sound_custom);
         rbDefault = (RadioButton) view.findViewById(R.id.reminder_details_sound_default);
