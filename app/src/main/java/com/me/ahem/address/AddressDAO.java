@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface AddressDAO {
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(Address address);
 
     @Query("DELETE FROM ADDRESS_TABLE")

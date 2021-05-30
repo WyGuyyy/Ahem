@@ -37,6 +37,9 @@ import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.me.ahem.address.Address;
+import com.me.ahem.location.Location;
+import com.me.ahem.reminder.Reminder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,72 +175,57 @@ public class reminder_add_fragment extends Fragment{
         radioButtonFields[1] = rbDefault;
         radioButtonFields[2] = rbPing;
 
-        /*txtLongitude.setOnFocusChangeListener(this);
-        txtLatitude.setOnFocusChangeListener(this);
-
-        txtAddress.setOnFocusChangeListener(this);
-        txtAddress.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //Nothing to do
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //updateSuggestions(s);
-                List<String> suggestions = new ArrayList<String>();
-                suggestions.add(s.toString());
-                ArrayAdapter<String> suggestionAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
-                txtAddress.setAdapter(suggestionAdapter);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                //Nothing to do
-            }
-        });
-
-        txtName.setOnFocusChangeListener(this);
-        txtDescription.setOnFocusChangeListener(this);
-        txtDistance.setOnFocusChangeListener(this);
-        txtHour.setOnFocusChangeListener(this);
-        txtMinute.setOnFocusChangeListener(this);
-        txtSecond.setOnFocusChangeListener(this);
-
-        swDistanceType.setOnFocusChangeListener(this);
-        swDistanceUnit.setOnFocusChangeListener(this);
-        swSoundType.setOnFocusChangeListener(this);
-
-        rbCustom.setOnFocusChangeListener(this);
-        rbDefault.setOnFocusChangeListener(this);
-        rbPing.setOnFocusChangeListener(this);*/
+        if(ahemViewModel.getMode().equals("edit")){
+            fillFieldsToEdit();
+        }
 
         // Inflate the layout for this fragment
         return view;
     }
 
-   /* @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        if(!hasFocus) {
-            updateViewModel(v);
-        }
-    }
+  private void fillFieldsToEdit(){
 
-    public void updateViewModel(View v){
-        String key = v.getTag().toString();
-        String value = "";
+      Reminder reminder = ahemViewModel.getReminder();
+      Location location = ahemViewModel.getLocation();
+      Address address = ahemViewModel.getAddress();
 
-        if(v instanceof EditText){
-            value = ((EditText) v).getText().toString();
-        }else if(v instanceof Switch){
-            value = Boolean.toString(((Switch) v).isChecked());
-        }else{
-            value = Boolean.toString(((RadioButton) v).isChecked());
-        }
+      String longitude = Float.toString(location.getLongitude());
+      String latitude = Float.toString(location.getLatitude());
+      String strAddress = address.getStreetNumber() + " " + address.getStreet() + " " + address.getCity() + " " + address.getState() + " " + address.getCountry() + " " + address.getZip();
+      String name = reminder.getName();
+      String description = reminder.getReminderDescription();
+      String strDistance = Float.toString(location.getRadius());
+      String hour = Integer.toString(location.getTime());
+      String minute = Integer.toString(location.getTime());
+      String second = Integer.toString(location.getTime());
 
-        ahemViewModel.updateDataMap(key, value);
+      boolean distanceType = true;
+      boolean distanceUnit = false;
+      boolean soundType = true;
 
-    }*/
+      boolean custom = true;
+      boolean aiVoice = false;
+      boolean ping = false;
+
+      txtLongitude.setText(longitude);
+      txtLatitude.setText(latitude);
+      txtAddress.setText(strAddress);
+      txtName.setText(name);
+      txtDescription.setText(description);
+      txtDistance.setText(strDistance);
+      txtHour.setText(hour);
+      txtMinute.setText(minute);
+      txtSecond.setText(second);
+
+      swDistanceType.setChecked(distanceType);
+      swDistanceUnit.setChecked(distanceUnit);
+      swSoundType.setChecked(soundType);
+
+      rbCustom.setChecked(custom);
+      rbDefault.setChecked(aiVoice);
+      rbPing.setChecked(ping);
+
+  }
 
     private void updateSuggestions(CharSequence s){
 

@@ -14,7 +14,7 @@ import java.util.List;
 public interface ReminderDAO
 {
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(Reminder reminder);
 
     @Query("DELETE FROM REMINDER_TABLE")

@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface LocationDAO {
 
-        @Insert(onConflict = OnConflictStrategy.ABORT)
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
         long insert(Location location);
 
         @Query("DELETE FROM LOCATION_TABLE")

@@ -97,7 +97,8 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         //.replace(R.id.relativeLayout, new reminder_add_fragment())
-                        .replace(R.id.frame_layout_controls, new reminder_add_fragment())
+                        .replace(R.id.frame_layout_controls, new reminder_add_fragment(), "ADD_FRAGMENT")
+                        .addToBackStack(null)
                         .commit();
                 }
         });

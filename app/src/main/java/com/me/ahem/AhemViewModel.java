@@ -107,11 +107,7 @@ public class AhemViewModel extends AndroidViewModel {
         newReminder.setReminderDescription(currentDataMap.get("description"));
         reminder.setValue(newReminder);
 
-        Log.d("labelll", currentDataMap.get("description"));
-
         long reminderID = mRepository.insertReminder(reminder.getValue());
-
-        Log.d("reminder test", Long.toString(reminderID));
 
         //Need to figure out how to parse address here to store
         TreeMap<String, String> addressMap = parseAddress(currentDataMap);
@@ -126,8 +122,6 @@ public class AhemViewModel extends AndroidViewModel {
 
         long addressID = mRepository.insertAddress(address.getValue());
 
-        Log.d("address test", Long.toString(addressID));
-
         newLocation.setLongitude(Float.parseFloat(currentDataMap.get("longitude")));
         newLocation.setLatitude(Float.parseFloat(currentDataMap.get("latitude")));
         newLocation.setRadius(Float.parseFloat(currentDataMap.get("distance_amount")));
@@ -138,7 +132,13 @@ public class AhemViewModel extends AndroidViewModel {
         newLocation.setAddressID(addressID);
         location.setValue(newLocation);
 
-        mRepository.insertLocation(location.getValue());
+        long locationID = mRepository.insertLocation(location.getValue());
+
+        if(getMode().equals("edit")){
+            getLocationFromDatabase(locationID);
+            getAddressFromDatabase(addressID);
+            getReminderFromDatabase(reminderID);
+        }
 
         //mRepository.insertNewRowItem(reminder.getValue(), location.getValue(), address.getValue());
     }
