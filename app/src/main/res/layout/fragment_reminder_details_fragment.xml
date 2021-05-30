@@ -392,7 +392,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_gravity="center"
                     android:showText="true"
-                    android:textOn="Voice"
+                    android:textOn="Noise"
                     android:textOff="Silent"/>
 
                 <RadioGroup
