@@ -98,7 +98,6 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
                         .beginTransaction()
                         //.replace(R.id.relativeLayout, new reminder_add_fragment())
                         .replace(R.id.frame_layout_controls, new reminder_add_fragment(), "ADD_FRAGMENT")
-                        .addToBackStack(null)
                         .commit();
                 }
         });
@@ -109,26 +108,54 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
             public void onClick(View v) {
                 ahemViewModel.setMode("list");
 
-                getActivity().getSupportFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        //.replace(R.id.relativeLayout, new reminder_add_fragment())
+                        .replace(R.id.frame_layout_controls, new reminder_list_fragment())
+                        .commit();
                 }
             }
         );
 
         txtLongitude.setText(Float.toString(location.getLongitude()));
+        txtLongitude.setEnabled(false);
+
         txtLatitude.setText(Float.toString(location.getLatitude()));
+        txtLatitude.setEnabled(false);
 
         String strAddress = address.getStreetNumber() + " " + address.getStreet() + " " + address.getCity() +
                             address.getState() + ", " + address.getZip() + " " + address.getCountry();
         txtAddress.setText(strAddress);
+        txtAddress.setEnabled(false);
 
         txtName.setText(reminder.getName());
+        txtName.setEnabled(false);
+
         txtDescription.setText(reminder.getReminderDescription());
+        txtDescription.setEnabled(false);
+
         txtDistance.setText(Float.toString(location.getRadius()));
+        txtDistance.setEnabled(false);
+
         txtHour.setText(Integer.toString(location.getTime()));
+        txtHour.setEnabled(false);
+
         txtMinute.setText(Integer.toString(location.getTime()));
+        txtMinute.setEnabled(false);
+
         txtSecond.setText(Integer.toString(location.getTime()));
+        txtSecond.setEnabled(false);
 
         swDistanceType.setChecked(true);
+        swDistanceType.setEnabled(false);
+
+        getSwDistanceUnit.setEnabled(false);
+
+        swSoundType.setEnabled(false);
+
+        rbCustom.setEnabled(false);
+        rbDefault.setEnabled(false);
+        rbPing.setEnabled(false);
 
         // Inflate the layout for this fragment
         return view;
@@ -141,7 +168,7 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
         }
     }
 
-    public void updateViewModel(View v){
+    public void updateViewModel(View v) {
 
     }
 

@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.libraries.places.api.Places;
@@ -60,9 +61,13 @@ public class reminder_add_fragment extends Fragment{
     EditText txtMinute;
     EditText txtSecond;
 
-    Switch swDistanceType;
+    /*Switch swDistanceType;
     Switch swDistanceUnit;
-    Switch swSoundType;
+    Switch swSoundType;*/
+
+    ToggleButton swDistanceType;
+    ToggleButton swDistanceUnit;
+    ToggleButton swSoundType;
 
     RadioButton rbCustom;
     RadioButton rbDefault;
@@ -72,7 +77,7 @@ public class reminder_add_fragment extends Fragment{
     FloatingActionButton backButton;
 
     EditText[] textFields;
-    Switch[] switchFields;
+    ToggleButton[] switchFields;
     RadioButton[] radioButtonFields;
 
     PlacesClient placesClient;
@@ -119,11 +124,13 @@ public class reminder_add_fragment extends Fragment{
                     if(ahemViewModel.getMode().equals("edit")){
 
                         ahemViewModel.setMode("detail");
-                        getActivity().getSupportFragmentManager().popBackStack();
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                //.replace(R.id.relativeLayout, new reminder_add_fragment())
+                                .replace(R.id.frame_layout_controls, new reminder_details_fragment())
+                                .commit();
 
                     }else {
-
-                        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
                         ahemViewModel.setMode("list");
 
@@ -141,9 +148,23 @@ public class reminder_add_fragment extends Fragment{
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ahemViewModel.setMode("list");
+                if(ahemViewModel.getMode().equals("edit")){
+                    ahemViewModel.setMode("detail");
 
-                getActivity().getSupportFragmentManager().popBackStack();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            //.replace(R.id.relativeLayout, new reminder_add_fragment())
+                            .replace(R.id.frame_layout_controls, new reminder_details_fragment())
+                            .commit();
+                }else {
+                    ahemViewModel.setMode("list");
+
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            //.replace(R.id.relativeLayout, new reminder_add_fragment())
+                            .replace(R.id.frame_layout_controls, new reminder_list_fragment())
+                            .commit();
+                }
             }
         });
 
@@ -157,11 +178,15 @@ public class reminder_add_fragment extends Fragment{
         textFields[6] = txtMinute;
         textFields[7] = txtSecond;
 
-        swDistanceType = (Switch) view.findViewById(R.id.add_reminder_distance_type);
+        /*swDistanceType = (Switch) view.findViewById(R.id.add_reminder_distance_type);
         swDistanceUnit = (Switch) view.findViewById(R.id.add_reminder_distance_unit);
-        swSoundType = (Switch) view.findViewById(R.id.add_reminder_sound_type);
+        swSoundType = (Switch) view.findViewById(R.id.add_reminder_sound_type);*/
 
-        switchFields = new Switch[3];
+        swDistanceType = (ToggleButton) view.findViewById(R.id.add_reminder_distance_type);
+        swDistanceUnit = (ToggleButton) view.findViewById(R.id.add_reminder_distance_unit);
+        swSoundType = (ToggleButton) view.findViewById(R.id.add_reminder_sound_type);
+
+        switchFields = new ToggleButton[3];
         switchFields[0] = swDistanceType;
         switchFields[1] = swSoundType;
         switchFields[2] = swDistanceUnit;

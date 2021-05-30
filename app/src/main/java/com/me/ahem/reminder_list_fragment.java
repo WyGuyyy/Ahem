@@ -84,8 +84,7 @@ public class reminder_list_fragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         //.replace(R.id.relativeLayout, new reminder_add_fragment())
-                        .replace(R.id.frame_layout_controls, new reminder_details_fragment(), "DETAIL_FRAGMENT")
-                        .addToBackStack(null)
+                        .replace(R.id.frame_layout_controls, new reminder_details_fragment())
                         .commit();
             }
         });
@@ -110,7 +109,6 @@ public class reminder_list_fragment extends Fragment {
                         .beginTransaction()
                         //.replace(R.id.relativeLayout, new reminder_add_fragment())
                         .replace(R.id.frame_layout_controls, new reminder_add_fragment(), "ADD_FRAGMENT")
-                        .addToBackStack(null)
                         .commit();
             }
         });

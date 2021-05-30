@@ -160,7 +160,9 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="20dp"
                         android:ems="10"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:inputType="text"
+                        android:maxLines="1"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -230,12 +232,15 @@
 
                 <Switch
                     android:id="@+id/reminder_details_distance_type"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
+                    android:switchMinWidth="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="5dp"
+                    android:layout_gravity="center"
+                    android:showText="true"
                     android:textOn="Radius"
                     android:textOff="Time"/>
 
@@ -247,11 +252,14 @@
 
                     <Switch
                         android:id="@+id/reminder_details_distance_unit"
-                        android:layout_width="match_parent"
+                        android:layout_width="100dp"
+                        android:switchMinWidth="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginRight="10dp"
+                        android:layout_gravity="center"
+                        android:showText="true"
                         android:textOn="Mi"
                         android:textOff="Km"/>
 
@@ -376,11 +384,14 @@
 
                 <Switch
                     android:id="@+id/reminder_details_sound_type"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
+                    android:switchMinWidth="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
+                    android:layout_gravity="center"
+                    android:showText="true"
                     android:textOn="Voice"
                     android:textOff="Silent"/>
 

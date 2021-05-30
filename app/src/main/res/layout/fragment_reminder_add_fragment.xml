@@ -124,7 +124,9 @@
                         android:ems="10"
                         android:gravity="center"
                         android:tag="@string/ETAddressTag"
-                        android:completionThreshold="1"/>
+                        android:completionThreshold="1"
+                        android:inputType="text"
+                        android:maxLines="1"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -194,17 +196,27 @@
                     android:hint="Description"
                     android:gravity="center"/>
 
-                <Switch
+                <!--<Switch
                     android:id="@+id/add_reminder_distance_type"
                     android:tag="@string/SWDistanceTypeTag"
-                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_width="100dp"
+                    android:switchMinWidth="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="5dp"
                     android:textOn="Radius"
-                    android:textOff="Time"/>
+                    android:textOff="Time"
+                    android:showText="true"/>-->
+                <ToggleButton
+                    android:id="@+id/add_reminder_distance_type"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textOff="Radius"
+                    android:textOn="Time"/>
 
                 <LinearLayout
                     android:id="@+id/add_reminder_radius_wrapper"
@@ -212,16 +224,27 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <Switch
+                    <!--<Switch
                         android:id="@+id/add_reminder_distance_unit"
                         android:tag="@string/SWDistanceUnitTag"
-                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_width="100dp"
+                        android:switchMinWidth="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginRight="10dp"
+                        android:showText="true"
                         android:textOn="Mi"
-                        android:textOff="Km"/>
+                        android:textOff="Km"/>-->
+                    <ToggleButton
+                        android:id="@+id/add_reminder_distance_unit"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:textOff="Mi"
+                        android:textOn="Km"/>
 
                     <EditText
                         android:id="@+id/add_reminder_distance_unit_amount"
@@ -346,16 +369,27 @@
 
                 </LinearLayout>
 
-                <Switch
+                <!--<Switch
                     android:id="@+id/add_reminder_sound_type"
                     android:tag="@string/SWSoundTypeTag"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
+                    android:switchMinWidth="100dp"
+                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
+                    android:showText="true"
                     android:textOn="Voice"
-                    android:textOff="Silent"/>
+                    android:textOff="Silent"/>-->
+                <ToggleButton
+                    android:id="@+id/add_reminder_sound_type"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:textOff="Voice"
+                    android:textOn="Silent"/>
 
                 <RadioGroup
                     android:id="@+id/add_reminder_sound_channel_wrapper"
