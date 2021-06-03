@@ -100,11 +100,30 @@ public class AhemViewModel extends AndroidViewModel {
         //TreeMap<String, String> currentDataMap = dataMap.getValue();
         TreeMap<String, String> currentDataMap = getDataMap().getValue();
 
-        int time = getTimeInSeconds(Integer.parseInt(currentDataMap.get("hour")), Integer.parseInt(currentDataMap.get("minute")), Integer.parseInt(currentDataMap.get("second")));
+        float longitude = Float.parseFloat(currentDataMap.get("longitude"));
+        float latitude = Float.parseFloat(currentDataMap.get("latitude"));
+        String strAddress = currentDataMap.get("address");
+        String name = currentDataMap.get("name");
+        String description = currentDataMap.get("description");
+
+        String distanceType = currentDataMap.get("distance_type");
+        String distanceUnit = currentDataMap.get("distance_unit");
+        Float distanceAmount = Float.parseFloat(currentDataMap.get("distance_amount"));
+
+        int hour = Integer.parseInt(currentDataMap.get("hour"));
+        int minute = Integer.parseInt(currentDataMap.get("minute"));
+        int second = Integer.parseInt(currentDataMap.get("second"));
+
+        String soundType = currentDataMap.get("sound_type");
+        String customSound = currentDataMap.get("custom");
+        String defaultSound = currentDataMap.get("default");
+        String pingSound = currentDataMap.get("ping");
+
+        int time = getTimeInSeconds(hour, minute, second);
         parseAddress(currentDataMap);
 
-        newReminder.setName(currentDataMap.get("name"));
-        newReminder.setReminderDescription(currentDataMap.get("description"));
+        newReminder.setName(name);
+        newReminder.setReminderDescription(description);
         reminder.setValue(newReminder);
 
         long reminderID = mRepository.insertReminder(reminder.getValue());
@@ -112,22 +131,20 @@ public class AhemViewModel extends AndroidViewModel {
         //Need to figure out how to parse address here to store
         TreeMap<String, String> addressMap = parseAddress(currentDataMap);
 
-        newAddress.setStreet("Test");
-        newAddress.setStreetNumber("Test");
-        newAddress.setCity("Test");
-        newAddress.setState("Test");
-        newAddress.setCountry("Test");
-        newAddress.setZip("Test");
+        newAddress.setStreet(strAddress);
+        newAddress.setStreetNumber(strAddress);
+        newAddress.setCity(strAddress);
+        newAddress.setState(strAddress);
+        newAddress.setCountry(strAddress);
+        newAddress.setZip(strAddress);
         address.setValue(newAddress);
 
         long addressID = mRepository.insertAddress(address.getValue());
 
-        newLocation.setLongitude(Float.parseFloat(currentDataMap.get("longitude")));
-        newLocation.setLatitude(Float.parseFloat(currentDataMap.get("latitude")));
-        newLocation.setRadius(Float.parseFloat(currentDataMap.get("distance_amount")));
+        newLocation.setLongitude(longitude);
+        newLocation.setLatitude(latitude);
+        newLocation.setRadius(distanceAmount);
         newLocation.setTime(time);
-        newLocation.setReminderID(newReminder.getReminderID());
-        newLocation.setAddressID(newAddress.getAddressID());
         newLocation.setReminderID(reminderID);
         newLocation.setAddressID(addressID);
         location.setValue(newLocation);

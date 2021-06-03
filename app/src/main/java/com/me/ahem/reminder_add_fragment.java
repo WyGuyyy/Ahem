@@ -239,15 +239,10 @@ public class reminder_add_fragment extends Fragment{
         rbCustom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean customState = ((RadioButton)v).isChecked();
-
-                if(customState){
-                    rbCustom.setChecked(true);
-                    rbDefault.setChecked(false);
-                    rbPing.setChecked(false);
-
-                    recordButton.setEnabled(true);
-                }
+                rbCustom.setChecked(true);
+                rbDefault.setChecked(false);
+                rbPing.setChecked(false);
+                recordButton.setEnabled(true);
             }
         });
 
@@ -255,30 +250,20 @@ public class reminder_add_fragment extends Fragment{
             @Override
             public void onClick(View v) {
                 boolean defaultState = ((RadioButton)v).isChecked();
-
-                if(defaultState){
-                    rbCustom.setChecked(false);
-                    rbDefault.setChecked(true);
-                    rbPing.setChecked(false);
-
-                    recordButton.setEnabled(false);
-                }
+                rbCustom.setChecked(false);
+                rbDefault.setChecked(true);
+                rbPing.setChecked(false);
+                recordButton.setEnabled(false);
             }
         });
 
-        rbPing.setOnClickListener(new View.OnClickListener() {
+        rbPing.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
-                boolean pingState = ((RadioButton)v).isChecked();
-
-                if(pingState) {
-                    rbCustom.setChecked(false);
-                    rbDefault.setChecked(false);
-                    rbPing.setChecked(true);
-
-                    recordButton.setEnabled(false);
-                }
+                rbCustom.setChecked(false);
+                rbDefault.setChecked(false);
+                rbPing.setChecked(true);
+                recordButton.setEnabled(false);
              }
         });
 
@@ -393,8 +378,6 @@ public class reminder_add_fragment extends Fragment{
     public boolean persistFields(){
 
         TreeMap<String, String> dataMap = ahemViewModel.getDataMap().getValue();
-
-        Log.d("test", "1");
 
         for(int i = 0; i < textFields.length; i++){
             String tag = textFields[i].getTag().toString();

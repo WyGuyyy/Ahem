@@ -413,56 +413,58 @@
                     android:textOff="Noise"
                     android:textOn="Silent"/>
 
-                <RadioGroup
-                    android:id="@+id/add_reminder_sound_channel_wrapper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp">
 
                     <LinearLayout
-                        android:id="@+id/add_reminder_sound_custom_wrapper"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp">
+
+                        <LinearLayout
+                            android:id="@+id/add_reminder_sound_custom_wrapper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/add_reminder_sound_custom"
+                                android:tag="@string/RBCustomTag"
+                                android:layout_width="100dp"
+                                android:layout_height="40dp"
+                                android:text="Custom" />
+
+                            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                android:id="@+id/floatingActionButtonRecordAdd"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:clickable="true"
+                                android:src="@android:drawable/ic_btn_speak_now"
+                                android:tint="#000000"
+                                app:backgroundTint="#00b02f"
+                                android:layout_marginLeft="40dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:fabCustomSize="40dp"
+                                android:scaleType="center"/>
+
+                        </LinearLayout>
 
                         <RadioButton
-                            android:id="@+id/add_reminder_sound_custom"
-                            android:tag="@string/RBCustomTag"
+                            android:id="@+id/add_reminder_sound_default"
+                            android:tag="@string/RBDefaultTag"
                             android:layout_width="100dp"
                             android:layout_height="40dp"
-                            android:text="Custom" />
+                            android:text="AI Voice" />
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/floatingActionButtonRecordAdd"
-                            android:layout_width="40dp"
+                        <RadioButton
+                            android:id="@+id/add_reminder_sound_ping"
+                            android:tag="@string/RBPingTag"
+                            android:layout_width="100dp"
                             android:layout_height="40dp"
-                            android:clickable="true"
-                            android:src="@android:drawable/ic_btn_speak_now"
-                            android:tint="#000000"
-                            app:backgroundTint="#00b02f"
-                            android:layout_marginLeft="40dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:fabCustomSize="40dp"
-                            android:scaleType="center"/>
+                            android:text="Ping" />
 
                     </LinearLayout>
-
-                    <RadioButton
-                        android:id="@+id/add_reminder_sound_default"
-                        android:tag="@string/RBDefaultTag"
-                        android:layout_width="100dp"
-                        android:layout_height="40dp"
-                        android:text="AI Voice" />
-
-                    <RadioButton
-                        android:id="@+id/add_reminder_sound_ping"
-                        android:tag="@string/RBPingTag"
-                        android:layout_width="100dp"
-                        android:layout_height="40dp"
-                        android:text="Ping" />
-                </RadioGroup>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
