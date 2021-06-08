@@ -61,6 +61,6 @@ public class ReminderAdapter extends BaseAdapter {
             return view;
         }
 
-        return null;
+        return view;
     }
 }

@@ -229,7 +229,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textOff="Radius"
-                    android:textOn="Time"/>
+                    android:textOn="Time"
+                    android:tag="@string/SWDistanceTypeTag"/>
 
                 <LinearLayout
                     android:id="@+id/add_reminder_radius_wrapper"
@@ -257,7 +258,8 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
                         android:textOff="Mi"
-                        android:textOn="Km"/>
+                        android:textOn="Km"
+                        android:tag="@string/SWDistanceUnitTag"/>
 
                     <EditText
                         android:id="@+id/add_reminder_distance_unit_amount"
@@ -411,7 +413,8 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:textOff="Noise"
-                    android:textOn="Silent"/>
+                    android:textOn="Silent"
+                    android:tag="@string/SWSoundTypeTag"/>
 
 
                     <LinearLayout

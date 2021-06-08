@@ -26,7 +26,7 @@ import com.me.ahem.address.Address;
 import com.me.ahem.location.Location;
 import com.me.ahem.reminder.Reminder;
 
-
+//START HERE NEXT TIME -> NEED TO UPDATE DETAIL FRAGMENT XML LAYOUT TO MATCH ADD FRAGMENT
 public class reminder_details_fragment extends Fragment implements View.OnFocusChangeListener{
 
     private AhemViewModel ahemViewModel;
@@ -89,6 +89,12 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
         editButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonDetail);
         backButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonBackDetail);
 
+        int hour;
+        int minute;
+        int second;
+
+        float radius;
+
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,8 +130,8 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
         txtLatitude.setText(Float.toString(location.getLatitude()));
         txtLatitude.setEnabled(false);
 
-        String strAddress = address.getStreetNumber() + " " + address.getStreet() + " " + address.getCity() +
-                            address.getState() + ", " + address.getZip() + " " + address.getCountry();
+        String strAddress = address.getStreetNumber(); //+ " " + address.getStreet() + " " + address.getCity() +
+                           // address.getState() + ", " + address.getZip() + " " + address.getCountry();
         txtAddress.setText(strAddress);
         txtAddress.setEnabled(false);
 
@@ -135,28 +141,41 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
         txtDescription.setText(reminder.getReminderDescription());
         txtDescription.setEnabled(false);
 
-        txtDistance.setText(Float.toString(location.getRadius()));
+        radius = location.getRadius() == -1 ? 0 : location.getRadius();
+
+        txtDistance.setText(Float.toString(radius));
         txtDistance.setEnabled(false);
 
-        txtHour.setText(Integer.toString(location.getTime()));
+        hour = location.getTime() == -1 ? 0 : location.getTime() / 3600;
+        minute = location.getTime() == -1 ? 0 : location.getTime() - (3600 * hour) / 60;
+        second = location.getTime() == -1 ? 0 : location.getTime() - ((3600 * hour) + (60 * minute));
+
+        txtHour.setText(Integer.toString(hour));
         txtHour.setEnabled(false);
 
-        txtMinute.setText(Integer.toString(location.getTime()));
+        txtMinute.setText(Integer.toString(minute));
         txtMinute.setEnabled(false);
 
-        txtSecond.setText(Integer.toString(location.getTime()));
+        txtSecond.setText(Integer.toString(second));
         txtSecond.setEnabled(false);
 
-        swDistanceType.setChecked(true);
+        swDistanceType.setChecked(location.getDistanceType().equals("Radius") ? false : true);
         swDistanceType.setEnabled(false);
 
         getSwDistanceUnit.setEnabled(false);
+        getSwDistanceUnit.setChecked(location.getDistanceUnit().equals("MI") ? false : true);
 
         swSoundType.setEnabled(false);
+        swSoundType.setChecked(reminder.getSoundType().equals("Noise") ? false : true);
 
         rbCustom.setEnabled(false);
+        rbCustom.setChecked(reminder.getSoundSelection().equals("Custom"));
+
         rbDefault.setEnabled(false);
+        rbDefault.setChecked(reminder.getSoundSelection().equals("Default"));
+
         rbPing.setEnabled(false);
+        rbPing.setChecked(reminder.getSoundSelection().equals("Ping"));
 
         // Inflate the layout for this fragment
         return view;

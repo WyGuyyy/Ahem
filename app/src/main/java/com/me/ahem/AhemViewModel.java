@@ -79,7 +79,7 @@ public class AhemViewModel extends AndroidViewModel {
 
     public void setDataMap(TreeMap<String, String> newDataMap){
 
-        int time = getTimeInSeconds(Integer.parseInt(newDataMap.get("hour")), Integer.parseInt(newDataMap.get("minute")), Integer.parseInt(newDataMap.get("second")));
+        //int time = getTimeInSeconds(Integer.parseInt(newDataMap.get("hour")), Integer.parseInt(newDataMap.get("minute")), Integer.parseInt(newDataMap.get("second")));
         parseAddress(newDataMap);
 
         dataMap.setValue(newDataMap);
@@ -108,27 +108,53 @@ public class AhemViewModel extends AndroidViewModel {
 
         String distanceType = currentDataMap.get("distance_type");
         String distanceUnit = currentDataMap.get("distance_unit");
-        Float distanceAmount = Float.parseFloat(currentDataMap.get("distance_amount"));
 
-        int hour = Integer.parseInt(currentDataMap.get("hour"));
-        int minute = Integer.parseInt(currentDataMap.get("minute"));
-        int second = Integer.parseInt(currentDataMap.get("second"));
+        Float distanceAmount = -1.0F;
+
+        if(!(currentDataMap.get("distance_amount") == null)){
+            distanceAmount = Float.parseFloat(currentDataMap.get("distance_amount"));
+        }
+
+        int hour = -1;
+        int minute = -1;
+        int second = -1;
+        int time = -1;
+
+        if(!(currentDataMap.get("hour") == null)){
+            hour = Integer.parseInt(currentDataMap.get("hour"));
+            minute = Integer.parseInt(currentDataMap.get("minute"));
+            second = Integer.parseInt(currentDataMap.get("second"));
+
+            time = getTimeInSeconds(hour, minute, second);
+        }
 
         String soundType = currentDataMap.get("sound_type");
         String customSound = currentDataMap.get("custom");
         String defaultSound = currentDataMap.get("default");
         String pingSound = currentDataMap.get("ping");
 
-        int time = getTimeInSeconds(hour, minute, second);
+        String soundSelection = "";
+
+        if(customSound.equals("ON")){
+            soundSelection = "Custom";
+        }else if(defaultSound.equals("ON")){
+            soundSelection = "Default";
+        }else if(pingSound.equals("ON")){
+            soundSelection = "Ping";
+        }else{
+            soundSelection = "None";
+        }
+
         parseAddress(currentDataMap);
 
         newReminder.setName(name);
         newReminder.setReminderDescription(description);
+        newReminder.setSoundType(soundType);
+        newReminder.setSoundSelection(soundSelection);
         reminder.setValue(newReminder);
 
         long reminderID = mRepository.insertReminder(reminder.getValue());
 
-        //Need to figure out how to parse address here to store
         TreeMap<String, String> addressMap = parseAddress(currentDataMap);
 
         newAddress.setStreet(strAddress);
@@ -143,6 +169,8 @@ public class AhemViewModel extends AndroidViewModel {
 
         newLocation.setLongitude(longitude);
         newLocation.setLatitude(latitude);
+        newLocation.setDistanceType(distanceType);
+        newLocation.setDistanceUnit(distanceUnit);
         newLocation.setRadius(distanceAmount);
         newLocation.setTime(time);
         newLocation.setReminderID(reminderID);

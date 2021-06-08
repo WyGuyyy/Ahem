@@ -94,6 +94,9 @@ public class reminder_list_fragment extends Fragment {
         });*/
 
         ahemViewModel.getAllRowItems().observe(this, items -> {
+
+            convertNegativesToNone(items);
+
             reminderAdapter.setData(items);
             listView.setAdapter(reminderAdapter);
         });
@@ -115,5 +118,15 @@ public class reminder_list_fragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    public void convertNegativesToNone(List<RowItem> items){
+
+        for(int i = 0; i < items.size(); i++) {
+            items.get(i).setLatitude(items.get(i).getLatitude() == -1 ? 0 : items.get(i).getLatitude());
+            items.get(i).setLongitude(items.get(i).getLongitude() == -1 ? 0 : items.get(i).getLongitude());
+            items.get(i).setRadius(items.get(i).getRadius() == -1 ? 0 : items.get(i).getRadius());
+        }
+
     }
 }

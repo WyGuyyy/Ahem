@@ -19,6 +19,12 @@ public class Reminder {
     @ColumnInfo(name = "reminderDescription")
     private String reminderDescription;
 
+    @ColumnInfo(name = "sound_type")
+    private String soundType;
+
+    @ColumnInfo(name = "sound_selection")
+    private String soundSelection;
+
     public Reminder() {
 
     }
@@ -58,7 +64,13 @@ public class Reminder {
         return reminderDescription;
     }
 
-    public void setReminderDescription(String reminderDescription) {
-        this.reminderDescription = reminderDescription;
-    }
+    public void setReminderDescription(String reminderDescription) { this.reminderDescription = reminderDescription; }
+
+    public String getSoundType() { return soundType; }
+
+    public void setSoundType(String soundType) { this.soundType = soundType; }
+
+    public String getSoundSelection() { return soundSelection; }
+
+    public void setSoundSelection(String soundSelection) { this.soundSelection = soundSelection; }
 }

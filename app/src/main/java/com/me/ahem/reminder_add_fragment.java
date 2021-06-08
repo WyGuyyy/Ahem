@@ -127,6 +127,7 @@ public class reminder_add_fragment extends Fragment{
                     if(ahemViewModel.getMode().equals("edit")){
 
                         ahemViewModel.setMode("detail");
+
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction()
                                 //.replace(R.id.relativeLayout, new reminder_add_fragment())
@@ -219,6 +220,10 @@ public class reminder_add_fragment extends Fragment{
             public void onClick(View v) {
                 boolean soundTypeState = ((ToggleButton) v).isChecked();
 
+                rbCustom.setChecked(!soundTypeState);
+                rbDefault.setChecked(false);
+                rbPing.setChecked(false);
+
                 rbCustom.setEnabled(!soundTypeState);
                 rbDefault.setEnabled(!soundTypeState);
                 rbPing.setEnabled(!soundTypeState);
@@ -235,6 +240,8 @@ public class reminder_add_fragment extends Fragment{
         rbCustom = (RadioButton) view.findViewById(R.id.add_reminder_sound_custom);
         rbDefault = (RadioButton) view.findViewById(R.id.add_reminder_sound_default);
         rbPing = (RadioButton) view.findViewById(R.id.add_reminder_sound_ping);
+
+        rbCustom.setChecked(true);
 
         rbCustom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -305,7 +312,7 @@ public class reminder_add_fragment extends Fragment{
 
       String longitude = Float.toString(location.getLongitude());
       String latitude = Float.toString(location.getLatitude());
-      String strAddress = address.getStreetNumber() + " " + address.getStreet() + " " + address.getCity() + " " + address.getState() + " " + address.getCountry() + " " + address.getZip();
+      String strAddress = address.getStreetNumber(); // + " " + address.getStreet() + " " + address.getCity() + " " + address.getState() + " " + address.getCountry() + " " + address.getZip();
       String name = reminder.getName();
       String description = reminder.getReminderDescription();
       String strDistance = Float.toString(location.getRadius());
@@ -313,13 +320,13 @@ public class reminder_add_fragment extends Fragment{
       String minute = Integer.toString(location.getTime());
       String second = Integer.toString(location.getTime());
 
-      boolean distanceType = true;
-      boolean distanceUnit = false;
-      boolean soundType = true;
+      boolean distanceType = location.getDistanceType().equals("Radius") ? false : true;
+      boolean distanceUnit = location.getDistanceUnit().equals("MI") ? false : true;
+      boolean soundType = reminder.getSoundType().equals("Noise") ? false : true;
 
-      boolean custom = true;
-      boolean aiVoice = false;
-      boolean ping = false;
+      boolean custom = reminder.getSoundSelection().equals("Custom");
+      boolean aiVoice = reminder.getSoundSelection().equals("Default");
+      boolean ping = reminder.getSoundSelection().equals("Ping");
 
       txtLongitude.setText(longitude);
       txtLatitude.setText(latitude);
@@ -386,11 +393,25 @@ public class reminder_add_fragment extends Fragment{
             if(!value.equals("")){
                 dataMap.put(tag, value);
             }else{
+                if(tag.equals("distance_amount")){
+                    if(swDistanceType.getText().equals("Radius")){
+                        return false;
+                    }else{
+                        continue;
+                    }
+                }
+
+                if(tag.equals("hour") || tag.equals("minute") || tag.equals("second")){
+                    if(swDistanceType.getText().equals("Time")){
+                        return false;
+                    }else{
+                        continue;
+                    }
+                }
+
                 return false;
             }
         }
-
-        Log.d("test", "2");
 
         for(int i = 0; i < switchFields.length; i++){
             String tag = switchFields[i].getTag().toString();
@@ -414,8 +435,6 @@ public class reminder_add_fragment extends Fragment{
             }*/
         }
 
-        Log.d("test", "3");
-
         for(int i = 0; i < radioButtonFields.length; i++){
             String tag = radioButtonFields[i].getTag().toString();
             boolean isChecked = radioButtonFields[i].isChecked();
@@ -424,11 +443,16 @@ public class reminder_add_fragment extends Fragment{
             dataMap.put(tag, value);
         }
 
-        Log.d("test", "4");
+        String tag = txtAddress.getTag().toString();
+        String value = txtAddress.getText().toString();
+
+        if(!value.equals("")){
+            dataMap.put(tag, value);
+        }else{
+            return false;
+        }
 
         ahemViewModel.setDataMap(dataMap);
-
-        Log.d("test", "5");
 
         return true;
 

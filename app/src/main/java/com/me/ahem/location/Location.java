@@ -1,5 +1,7 @@
 package com.me.ahem.location;
 
+import android.support.v4.media.MediaMetadataCompat;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -24,6 +26,12 @@ public class Location {
 
     @ColumnInfo(name = "latitude")
     private float latitude;
+
+    @ColumnInfo(name = "distance_type")
+    private String distanceType;
+
+    @ColumnInfo(name = "distance_unit")
+    private String distanceUnit;
 
     @ColumnInfo(name = "radius")
     private float radius;
@@ -97,6 +105,14 @@ public class Location {
     public void setLatitude(float latitude) {
         this.latitude = latitude;
     }
+
+    public String getDistanceType() { return distanceType; }
+
+    public void setDistanceType(String distanceType) { this.distanceType = distanceType; }
+
+    public String getDistanceUnit() { return distanceUnit; }
+
+    public void setDistanceUnit(String distanceUnit) { this.distanceUnit = distanceUnit; }
 
     public float getRadius() {
         return radius;
