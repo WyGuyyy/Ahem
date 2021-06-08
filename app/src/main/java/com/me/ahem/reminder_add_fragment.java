@@ -1,5 +1,6 @@
 package com.me.ahem;
 
+import android.media.MediaRecorder;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -81,6 +83,8 @@ public class reminder_add_fragment extends Fragment{
     EditText[] textFields;
     ToggleButton[] switchFields;
     RadioButton[] radioButtonFields;
+
+    MediaRecorder recorder = null;
 
     PlacesClient placesClient;
 
@@ -169,6 +173,25 @@ public class reminder_add_fragment extends Fragment{
                             .replace(R.id.frame_layout_controls, new reminder_list_fragment())
                             .commit();
                 }
+            }
+        });
+
+        recordButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                startRecording();
+                return false;
+            }
+        });
+
+        recordButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    stopRecording();
+                }
+
+                return false;
             }
         });
 
@@ -456,5 +479,19 @@ public class reminder_add_fragment extends Fragment{
 
         return true;
 
+    }
+
+    private void startRecording(){
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+        recorder.setOutputFile("");
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+    }
+
+    private void stopRecording(){
+        recorder.stop();
+        recorder.release();
+        recorder = null;
     }
 }
