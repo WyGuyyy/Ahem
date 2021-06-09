@@ -85,6 +85,7 @@ public class reminder_add_fragment extends Fragment{
     RadioButton[] radioButtonFields;
 
     MediaRecorder recorder = null;
+    String filename = "NONE";
 
     PlacesClient placesClient;
 
@@ -475,6 +476,8 @@ public class reminder_add_fragment extends Fragment{
             return false;
         }
 
+        dataMap.put("filepath", filename);
+
         ahemViewModel.setDataMap(dataMap);
 
         return true;
@@ -485,7 +488,8 @@ public class reminder_add_fragment extends Fragment{
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        recorder.setOutputFile("");
+        filename = generateFilePath();
+        recorder.setOutputFile(filename);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
     }
 
@@ -493,5 +497,11 @@ public class reminder_add_fragment extends Fragment{
         recorder.stop();
         recorder.release();
         recorder = null;
+    }
+
+    private String generateFilePath(){
+        String filepath = "";
+
+        return filepath;
     }
 }

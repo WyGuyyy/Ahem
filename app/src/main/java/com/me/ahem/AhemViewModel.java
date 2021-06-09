@@ -105,6 +105,7 @@ public class AhemViewModel extends AndroidViewModel {
         String strAddress = currentDataMap.get("address");
         String name = currentDataMap.get("name");
         String description = currentDataMap.get("description");
+        String filepath = currentDataMap.get("filepath");
 
         String distanceType = currentDataMap.get("distance_type");
         String distanceUnit = currentDataMap.get("distance_unit");
@@ -151,6 +152,7 @@ public class AhemViewModel extends AndroidViewModel {
         newReminder.setReminderDescription(description);
         newReminder.setSoundType(soundType);
         newReminder.setSoundSelection(soundSelection);
+        newReminder.setSoundFilePath(filepath);
         reminder.setValue(newReminder);
 
         long reminderID = mRepository.insertReminder(reminder.getValue());

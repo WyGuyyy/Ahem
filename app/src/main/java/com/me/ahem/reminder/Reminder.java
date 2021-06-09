@@ -25,6 +25,9 @@ public class Reminder {
     @ColumnInfo(name = "sound_selection")
     private String soundSelection;
 
+    @ColumnInfo(name = "sound_file_path")
+    private String soundFilePath;
+
     public Reminder() {
 
     }
@@ -73,4 +76,9 @@ public class Reminder {
     public String getSoundSelection() { return soundSelection; }
 
     public void setSoundSelection(String soundSelection) { this.soundSelection = soundSelection; }
+
+    public String getSoundFilePath() { return soundFilePath; }
+
+    public void setSoundFilePath(String soundFilePath) { this.soundFilePath = soundFilePath; }
+
 }
