@@ -93,7 +93,7 @@ public class AhemViewModel extends AndroidViewModel {
         Log.d("after", dataMap.getValue().keySet().toString());
     }*/
 
-    public void submitDataMap(){
+    public void submitDataMap(){ //Start here and submit file path!!!!
         Reminder newReminder = reminder.getValue();
         Location newLocation = location.getValue();
         Address newAddress = address.getValue();

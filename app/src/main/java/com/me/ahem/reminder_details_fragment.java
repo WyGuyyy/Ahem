@@ -1,5 +1,8 @@
 package com.me.ahem;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -26,6 +29,8 @@ import com.me.ahem.address.Address;
 import com.me.ahem.location.Location;
 import com.me.ahem.reminder.Reminder;
 
+import java.io.IOException;
+
 //START HERE NEXT TIME -> NEED TO UPDATE DETAIL FRAGMENT XML LAYOUT TO MATCH ADD FRAGMENT
 public class reminder_details_fragment extends Fragment implements View.OnFocusChangeListener{
 
@@ -51,6 +56,9 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
 
     FloatingActionButton editButton;
     FloatingActionButton backButton;
+    FloatingActionButton playButton;
+
+    String filepath = "";
 
     public reminder_details_fragment() {
         // Required empty public constructor
@@ -88,6 +96,7 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
 
         editButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonDetail);
         backButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonBackDetail);
+        playButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonPlay);
 
         int hour;
         int minute;
@@ -123,6 +132,14 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
                 }
             }
         );
+
+        playButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                playRecording();
+            }
+        });
 
         txtLongitude.setText(Float.toString(location.getLongitude()));
         txtLongitude.setEnabled(false);
@@ -177,6 +194,16 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
         rbPing.setEnabled(false);
         rbPing.setChecked(reminder.getSoundSelection().equals("Ping"));
 
+        filepath = reminder.getSoundFilePath();
+
+        if(filepath.equals("")){
+            playButton.setEnabled(false);
+            playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#adadad")));
+        }else{
+            playButton.setEnabled(true);
+            playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00b02f")));
+        }
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -190,6 +217,18 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
 
     public void updateViewModel(View v) {
 
+    }
+
+    public void playRecording(){
+        MediaPlayer mediaPlayer = new MediaPlayer();
+
+        try {
+            mediaPlayer.setDataSource(filepath);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

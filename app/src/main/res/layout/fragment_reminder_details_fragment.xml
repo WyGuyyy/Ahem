@@ -400,14 +400,19 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textOff="Radius"
-                    android:textOn="Time"/>
+                    android:textOff="Noise"
+                    android:textOn="Silent"/>
 
-                <RadioGroup
+               <!-- <RadioGroup
                 android:id="@+id/reminder_details_sound_channel_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp">-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
 
                     <LinearLayout
                         android:id="@+id/reminder_details_sound_custom_wrapper"
@@ -417,16 +422,24 @@
 
                         <RadioButton
                             android:id="@+id/reminder_details_sound_custom"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
                             android:text="Custom" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/reminder_details_sound_custom_record"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/floatingActionButtonPlay"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:clickable="true"
-                            android:src="@android:drawable/ic_btn_speak_now" />
+                            android:src="@android:drawable/ic_media_play"
+                            android:tint="#000000"
+                            app:backgroundTint="#adadad"
+                            android:layout_marginLeft="40dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:fabCustomSize="40dp"
+                            android:scaleType="center"/>
 
                     </LinearLayout>
 
@@ -441,7 +454,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Ping" />
-                </RadioGroup>
+
+                </LinearLayout>
+                <!--</RadioGroup>-->
 
             </LinearLayout>
 

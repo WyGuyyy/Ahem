@@ -451,6 +451,21 @@
                                 app:fabCustomSize="40dp"
                                 android:scaleType="center"/>
 
+                            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                android:id="@+id/floatingActionButtonPlay"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:clickable="true"
+                                android:src="@android:drawable/ic_media_play"
+                                android:tint="#000000"
+                                app:backgroundTint="#adadad"
+                                android:layout_marginLeft="40dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:fabCustomSize="40dp"
+                                android:scaleType="center"/>
+
                         </LinearLayout>
 
                         <RadioButton

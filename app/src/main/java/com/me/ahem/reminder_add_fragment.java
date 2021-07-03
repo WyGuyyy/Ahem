@@ -1,8 +1,13 @@
 package com.me.ahem;
 
+import android.Manifest;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -45,7 +51,10 @@ import com.me.ahem.address.Address;
 import com.me.ahem.location.Location;
 import com.me.ahem.reminder.Reminder;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -79,6 +88,7 @@ public class reminder_add_fragment extends Fragment{
     FloatingActionButton saveButton;
     FloatingActionButton backButton;
     FloatingActionButton recordButton;
+    FloatingActionButton playButton;
 
     EditText[] textFields;
     ToggleButton[] switchFields;
@@ -86,8 +96,14 @@ public class reminder_add_fragment extends Fragment{
 
     MediaRecorder recorder = null;
     String filename = "NONE";
+    String filepath = "";
+
+    boolean isRecording = false;
 
     PlacesClient placesClient;
+
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
     public reminder_add_fragment() {
         // Required empty public constructor
@@ -99,6 +115,10 @@ public class reminder_add_fragment extends Fragment{
 
         //Initialize view
         View view = inflater.inflate(R.layout.fragment_reminder_add_fragment, container, false);
+
+        ActivityCompat.requestPermissions(this.getActivity(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+
+        isRecording = false;
 
         ahemViewModel = new ViewModelProvider(getActivity(), new AhemViewModelFactory(getActivity().getApplication())).get(AhemViewModel.class);
 
@@ -118,6 +138,18 @@ public class reminder_add_fragment extends Fragment{
         saveButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonAdd);
         backButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonBackAdd);
         recordButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonRecordAdd);
+        playButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButtonPlay);
+
+        playButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#adadad")));
+                playRecording();
+            }
+        });
+
+        playButton.setEnabled(false);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +209,27 @@ public class reminder_add_fragment extends Fragment{
             }
         });
 
-        recordButton.setOnLongClickListener(new View.OnLongClickListener() {
+        recordButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                if(isRecording){
+                    isRecording = false;
+                    recordButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00b02f")));
+                    stopRecording();
+                    playButton.setEnabled(true);
+                    playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00b02f")));
+                }else{
+                    isRecording = true;
+                    recordButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7affa0")));
+                    startRecording();
+                    playButton.setEnabled(false);
+                    playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#adadad")));
+                }
+            }
+        });
+
+       /* recordButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 startRecording();
@@ -194,7 +246,7 @@ public class reminder_add_fragment extends Fragment{
 
                 return false;
             }
-        });
+        });*/
 
         textFields = new EditText[8];
         textFields[0] = txtLongitude;
@@ -274,6 +326,9 @@ public class reminder_add_fragment extends Fragment{
                 rbDefault.setChecked(false);
                 rbPing.setChecked(false);
                 recordButton.setEnabled(true);
+                playButton.setEnabled(true);
+                recordButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00b02f")));
+                playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00b02f")));
             }
         });
 
@@ -285,6 +340,9 @@ public class reminder_add_fragment extends Fragment{
                 rbDefault.setChecked(true);
                 rbPing.setChecked(false);
                 recordButton.setEnabled(false);
+                playButton.setEnabled(false);
+                recordButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#adadad")));
+                playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#adadad")));
             }
         });
 
@@ -295,6 +353,9 @@ public class reminder_add_fragment extends Fragment{
                 rbDefault.setChecked(false);
                 rbPing.setChecked(true);
                 recordButton.setEnabled(false);
+                playButton.setEnabled(false);
+                recordButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#adadad")));
+                playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#adadad")));
              }
         });
 
@@ -369,6 +430,13 @@ public class reminder_add_fragment extends Fragment{
       rbCustom.setChecked(custom);
       rbDefault.setChecked(aiVoice);
       rbPing.setChecked(ping);
+
+      filepath = reminder.getSoundFilePath();
+
+      if(!filepath.equals("")){
+          playButton.setEnabled(true);
+          playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00b02f")));
+      }
 
   }
 
@@ -447,7 +515,7 @@ public class reminder_add_fragment extends Fragment{
             }else if(tag.equals("SWDistanceUnitTag")){
                 value = (isChecked ? "M" : "KM");
             }else{
-                value = (isChecked ? "Silent" : "Voice");
+                value = (isChecked ? "Silent" : "Noise");
             }
 
             dataMap.put(tag, value);
@@ -476,7 +544,15 @@ public class reminder_add_fragment extends Fragment{
             return false;
         }
 
-        dataMap.put("filepath", filename);
+        if(dataMap.get("custom").equals("ON")){
+            if(filepath.equals("")){
+                return false;
+            }else{
+                dataMap.put("filepath", filepath);
+            }
+        }
+
+        //dataMap.put("filepath", filename);
 
         ahemViewModel.setDataMap(dataMap);
 
@@ -486,11 +562,18 @@ public class reminder_add_fragment extends Fragment{
 
     private void startRecording(){
         recorder = new MediaRecorder();
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        filename = generateFilePath();
-        recorder.setOutputFile(filename);
+        filepath = generateFilepath();
+        recorder.setOutputFile(filepath);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            recorder.prepare();
+            recorder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void stopRecording(){
@@ -499,8 +582,42 @@ public class reminder_add_fragment extends Fragment{
         recorder = null;
     }
 
-    private String generateFilePath(){
-        String filepath = "";
+    private void playRecording(){
+        MediaPlayer mediaPlayer = new MediaPlayer();
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00b02f")));
+            }
+        });
+
+        try {
+            mediaPlayer.setDataSource(filepath);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String generateFilepath(){
+
+        if(!filepath.equals("")){
+            return filepath;
+        }
+
+        File file = getContext().getFilesDir();
+        String[] fileList = getContext().fileList();
+        int fileID = 0;
+
+        for(fileID = 0; fileID < fileList.length; fileID++){
+            if(!Arrays.asList(fileList).contains("custom_sound" + fileID + ".mp4")){
+                break;
+            }
+        }
+
+        String filepath = file.getAbsolutePath() + "/custom_sound" + fileID + ".mp4";
 
         return filepath;
     }
