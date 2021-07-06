@@ -3,6 +3,7 @@ package com.me.ahem;
 import android.Manifest;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.icu.util.ULocale;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -405,6 +406,14 @@ public class reminder_add_fragment extends Fragment{
       String minute = Integer.toString(location.getTime());
       String second = Integer.toString(location.getTime());
 
+      int iHour = (Integer.parseInt(hour) == -1 ? 0 : (location.getTime() / 3600));
+      int iMinute = (Integer.parseInt(minute) == -1 ? 0 : (location.getTime() - (iHour * 3600))/60);
+      int iSecond = (Integer.parseInt(second) == -1 ? 0 : ((location.getTime() - (iHour * 3600)) - (iMinute * 60)));
+
+      hour = Integer.toString(iHour);
+      minute = Integer.toString(iMinute);
+      second = Integer.toString(iSecond);
+
       boolean distanceType = location.getDistanceType().equals("Radius") ? false : true;
       boolean distanceUnit = location.getDistanceUnit().equals("MI") ? false : true;
       boolean soundType = reminder.getSoundType().equals("Noise") ? false : true;
@@ -433,7 +442,7 @@ public class reminder_add_fragment extends Fragment{
 
       filepath = reminder.getSoundFilePath();
 
-      if(!filepath.equals("")){
+      if(!(filepath == null)){
           playButton.setEnabled(true);
           playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00b02f")));
       }
@@ -445,8 +454,6 @@ public class reminder_add_fragment extends Fragment{
         List<String> suggestions = new ArrayList<String>();
 
         AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
-
-        Log.d("test", "here");
 
         FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
                 .setTypeFilter(TypeFilter.ADDRESS)
@@ -510,9 +517,12 @@ public class reminder_add_fragment extends Fragment{
             boolean isChecked = switchFields[i].isChecked();
             String value;
 
-            if(tag.equals("SWDistanceTypeTag")){
-                value = (isChecked ? "Time" : "Distance");
-            }else if(tag.equals("SWDistanceUnitTag")){
+            Log.d("leg", tag);
+
+            if(tag.equals("distance_type")){
+                value = (isChecked ? "Time" : "Radius");
+
+            }else if(tag.equals("distance_unit")){
                 value = (isChecked ? "M" : "KM");
             }else{
                 value = (isChecked ? "Silent" : "Noise");

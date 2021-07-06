@@ -164,8 +164,10 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
         txtDistance.setEnabled(false);
 
         hour = location.getTime() == -1 ? 0 : location.getTime() / 3600;
-        minute = location.getTime() == -1 ? 0 : location.getTime() - (3600 * hour) / 60;
-        second = location.getTime() == -1 ? 0 : location.getTime() - ((3600 * hour) + (60 * minute));
+        minute = location.getTime() == -1 ? 0 : (location.getTime() - (3600 * hour)) / 60;
+        second = location.getTime() == -1 ? 0 : ((location.getTime() - ((3600 * hour)) - (60 * minute)));
+
+        Log.d("test", "" + hour);
 
         txtHour.setText(Integer.toString(hour));
         txtHour.setEnabled(false);
@@ -176,6 +178,7 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
         txtSecond.setText(Integer.toString(second));
         txtSecond.setEnabled(false);
 
+        Log.d("log", location.getDistanceType());
         swDistanceType.setChecked(location.getDistanceType().equals("Radius") ? false : true);
         swDistanceType.setEnabled(false);
 
@@ -196,7 +199,7 @@ public class reminder_details_fragment extends Fragment implements View.OnFocusC
 
         filepath = reminder.getSoundFilePath();
 
-        if(filepath.equals("")){
+        if(filepath == null){
             playButton.setEnabled(false);
             playButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#adadad")));
         }else{

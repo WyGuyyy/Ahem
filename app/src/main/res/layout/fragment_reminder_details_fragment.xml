@@ -263,8 +263,8 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textOff="Radius"
-                        android:textOn="Time"/>
+                        android:textOff="MI"
+                        android:textOn="KM"/>
 
                     <EditText
                         android:id="@+id/reminder_details_distance_unit_amount"
